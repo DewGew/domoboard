@@ -54,7 +54,7 @@ To reactivate the virtualenv later on repeat the "Start the virtualenv" step.
 
 # Install as a service
 
-To configure Dzgaboard as a service, create a new file /etc/systemd/system/domoboard.service with the following contents (modify paths if Domoboard is not located at /home/pi):
+To configure Dzgaboard as a service, create a new file /etc/systemd/system/dzgaboard.service with the following contents (modify paths if Domoboard is not located at /home/pi):
 
 ```
 [Unit]
@@ -81,11 +81,11 @@ Now run the following command to start the service:
 sudo systemctl start dzgaboard.service 
 ```
 
-Please note that if you are running Domoboard on ports <= 1024 a user with permissions needs to be specified (User and Group under [Service]). Otherwise Domoboard cannot bind to the port due to a permission denied error. 
+Please note that if you are running Dzgaboard on ports <= 1024 a user with permissions needs to be specified (User and Group under [Service]). Otherwise Domoboard cannot bind to the port due to a permission denied error. 
 
 # Configuration
 
-Just one config is used to configure Domoboard. A example can be found the applications root ("example.conf"). The following display components are currently supported:
+Just one config is used to configure Dzgaboard. A example can be found the applications root ("example.conf"). The following display components are currently supported:
 - top_tiles
 - switches
   - switch
@@ -116,7 +116,7 @@ Just one config is used to configure Domoboard. A example can be found the appli
 
 # API
 
-Domoboard has an API which can be found at "/api". All JavaScript files that update data frequently are using this API to obtain the information that is going to be displayed. By default all requests to the API are passed to the Domoticz backend. This means that Domoboard accepts the same API calls as Domoticz does.  However the API also allows an plugin developer to add its own API functions by creating an Python module. Developers can specify a "custom" GET-parameter which is patched in to the current API, this allows the developer to run their own Python functions when the API is called.
+Dzgaboard has an API which can be found at "/api". All JavaScript files that update data frequently are using this API to obtain the information that is going to be displayed. By default all requests to the API are passed to the Domoticz backend. This means that Dzgaboard accepts the same API calls as Domoticz does.  However the API also allows an plugin developer to add its own API functions by creating an Python module. Developers can specify a "custom" GET-parameter which is patched in to the current API, this allows the developer to run their own Python functions when the API is called.
 
 # Modulair
 
