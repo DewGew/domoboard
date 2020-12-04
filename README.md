@@ -1,18 +1,17 @@
-# Domoboard
+# Dzgaboard
 
-*Domoboard is deprecated and not maintained anymore*
 
-Domoboard is a dashboard for Domoticz based on Python Flask. The decision was made to use Domoticz as an backend because it is a powerful framework for home automation. Flask was choosen to get all the powerful features that Python offers.
+Dzgaboard is a dashboard for Domoticz based on Python Flask. The decision was made to use Domoticz as an backend because it is a powerful framework for home automation. Flask was choosen to get all the powerful features that Python offers.
 
 # Manual installation
 
-To manually install Domoboard, take the steps below. 
+To manually install Dzgaboard, take the steps below. 
 
 Clone the git:
 
 ```
 cd /home/pi
-git clone https://github.com/wez3/domoboard
+git clone https://github.com/dewgew/dzgaboard
 ```
 
 Install virtualenv:
@@ -24,17 +23,17 @@ sudo apt-get install python-virtualenv
 Create the virtualenv:
 
 ```
-virtualenv /home/pi/domoboard/
+virtualenv /home/pi/dzgaboard/
 ```
 
 Start the virtualenv:
 
 ```
-cd /home/pi/domoboard/
+cd /home/pi/dzgaboard/
 source bin/activate
 ```
 
-Install Domoboard dependencies:
+Install Dzgaboard dependencies:
 
 ```
 pip install -r requirements.txt
@@ -46,7 +45,7 @@ Modify the config file to suit your needs. Start Domoboard by executing:
 python server.py -c <config_file>
 ```
 
-It is possible to run Domoboard in "debug" mode by running the command:
+It is possible to run Dzgaboard in "debug" mode by running the command:
 ```
 python server.py -c <config_file> -d
 ```
@@ -55,15 +54,15 @@ To reactivate the virtualenv later on repeat the "Start the virtualenv" step.
 
 # Install as a service
 
-To configure Domoboard as a service, create a new file /etc/systemd/system/domoboard.service with the following contents (modify paths if Domoboard is not located at /home/pi):
+To configure Dzgaboard as a service, create a new file /etc/systemd/system/domoboard.service with the following contents (modify paths if Domoboard is not located at /home/pi):
 
 ```
 [Unit]
-Description=Domoboard dashboard
+Description=Dzgaboard dashboard
 
 [Service]
-ExecStart=/home/pi/domoboard/bin/python /home/pi/domoboard/server.py -d -c /home/pi/domoboard/config.conf
-WorkingDirectory=/home/pi/domoboard/
+ExecStart=/home/pi/dzgaboard/bin/python /home/pi/dzgaboard/server.py -d -c /home/pi/dzgaboard/config.conf
+WorkingDirectory=/home/pi/dzgaboard/
 Restart=on-failure
 
 [Install]
@@ -73,13 +72,13 @@ WantedBy=multi-user.target
 Now run the following command to enable the service:
 
 ```
-sudo systemctl enable domoboard.service 
+sudo systemctl enable dzgaboard.service 
 ```
 
 Now run the following command to start the service:
 
 ```
-sudo systemctl start domoboard.service 
+sudo systemctl start dzgaboard.service 
 ```
 
 Please note that if you are running Domoboard on ports <= 1024 a user with permissions needs to be specified (User and Group under [Service]). Otherwise Domoboard cannot bind to the port due to a permission denied error. 
