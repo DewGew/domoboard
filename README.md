@@ -1,7 +1,8 @@
 # Dzgaboard
 
 
-Dzgaboard is a fork based on Domoboard https://github.com/wez3/Domoboard
+Dzgaboard is a fork based on Domoboard https://github.com/wez3/Domoboard. 
+
 Dzgaboard is a dashboard for Domoticz based on Python Flask. The decision was made to use Domoticz as an backend because it is a powerful framework for home automation. Flask was choosen to get all the powerful features that Python offers.
 
 # Manual installation
