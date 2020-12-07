@@ -4,7 +4,7 @@
 {% set count = 0 %}
 {% for block in blockArray %}
   {% set count = loop.index - 1 %}
-  {% for k, v in block.iteritems() %}
+  {% for k, v in block.items() %}
     {% include k + ".html" ignore missing %}
   {% endfor %}
 {% endfor %}

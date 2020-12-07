@@ -26,7 +26,7 @@ var line_chart_block_{{count}} = Morris.Line({
 });
 
 $(document).ready(function() {
-  {% for k, v in blockArray[count]["line_charts"].iteritems() %}
+  {% for k, v in blockArray[count]["line_charts"].items() %}
    var sensor = "{{v[3]}}";
    if ("{{v[3]}}" == 'lux') {
      line_chart_block_{{count}}['options']['ykeys'][0] = 'lux_max';

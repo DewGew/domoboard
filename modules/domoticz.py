@@ -2,7 +2,7 @@
 # This file contains all Domoticz related Python functions
 
 import requests, json, sys
-import api
+from modules import api
 
 def queryDomoticz(url):
     config = api.getConfig()
@@ -29,7 +29,7 @@ def checkDomoticzStatus(config):
     configuredDevicesInDomoticz(config, domoticzDevices, domoticzScenes)
 
 def configuredDevicesInDomoticz(config, domoticzDevices, domoticzScenes):
-    for k, v in config.iteritems():
+    for k, v in config.items():
         if isinstance(v, dict):
             configuredDevicesInDomoticz(v, domoticzDevices, domoticzScenes)
         else:

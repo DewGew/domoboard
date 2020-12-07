@@ -2,9 +2,9 @@
 # Provides all the API functionality callable through "/api"
 
 from flask import request
-from flaskext.auth import login_required
+import flask_login
 import json, os, sys
-import security, charts, plugins, webconfig, domoticz
+from modules import security, charts, plugins, webconfig, domoticz
 
 apiDict = {}
 modules = {}
@@ -17,7 +17,7 @@ def init():
 def addToApi(custom, module, function):
     apiDict[custom] = [module, function]
 
-@login_required()
+@flask_login.login_required
 def gateway():
     requestedUrl = request.url.split("/api")
     custom = request.args.get('custom', '')
@@ -46,8 +46,8 @@ def gateway():
     else:
         result = domoticz.queryDomoticz(requestedUrl[1])
     try:
-    	if not isJson(result):
-           result = json.dumps(result)
+        if not isJson(result):
+            result = json.dumps(result)
         return security.sanitizeJSON(json.loads(result))
     except:
         return "No results returned"
@@ -71,6 +71,6 @@ def getOriginalConfig():
 def isJson(myjson):
     try:
         json_object = json.loads(myjson)
-    except ValueError, e:
+    except (ValueError, e):
         return False
     return True

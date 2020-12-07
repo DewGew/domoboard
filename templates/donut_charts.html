@@ -21,7 +21,7 @@ var donut_chart_block_{{count}} = Morris.Donut({
 
 $(document).ready(function() {
   var donutChartElements=[];
-  {% for k, v in blockArray[count]["donut_charts"].iteritems() %}
+  {% for k, v in blockArray[count]["donut_charts"].items() %}
   donutChartElements.push("{{v[1]}}");
   {% endfor %}
   redrawDonutChart(donutChartElements, donut_chart_block_{{count}});

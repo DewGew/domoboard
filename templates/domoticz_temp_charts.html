@@ -16,7 +16,7 @@
 <script type="text/javascript" charset="utf-8">
 
 $(document).ready(function() {
-  {% for k, v in blockArray[count]["domoticz_temp_charts"].iteritems() %}
+  {% for k, v in blockArray[count]["domoticz_temp_charts"].items() %}
   ShowTempLog("domoticz-chart-block-{{count}}",{{v[1]}},"{{k}}", "{{v[2]}}");
   $("div#title_block_{{count}} h2").html("{{k}}");
   setInterval(ShowTempLog,60000,"domoticz-chart-block-{{count}}",{{v[1]}},"{{k}}", "{{v[2]}}");

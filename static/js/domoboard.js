@@ -443,7 +443,8 @@ function performUpgrade() {
 
 function checkVersion(branch) {
   $.ajax({
-    url: "https://localhost/version.md",
+    url: "https://raw.githubusercontent.com/DewGew/dzgaboard/master/VERSION.md",
+/*     url: "https://localhost/version.md", */
     cache: false,
     success: function( data ) {
       if (branch == "master") {
@@ -467,7 +468,8 @@ function checkVersion(branch) {
 
 function checkVersionSettings(branch) {
   $.ajax({
-    url: "https://localhost/version.md",
+    url: "https://raw.githubusercontent.com/DewGew/dzgaboard/master/VERSION.md",
+/*     url: "https://localhost/v.md", */
     cache: false,
     success: function( data ) {
       if (branch == "master") {

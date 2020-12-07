@@ -1,6 +1,6 @@
 <!-- top tiles -->
 <div class="row tile_count">
-  {% for k, v in blockArray[count]["top_tiles"].iteritems() %}
+  {% for k, v in blockArray[count]["top_tiles"].items() %}
   <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
     <div class="left"></div>
     <div class="right">
@@ -16,7 +16,7 @@ $(document).ready(function() {
   var tilesPreviousArray_{{count}}=[];
   var updateDivsType_block_{{count}} = [];
   var updateDivsUnits_block_{{count}} = [];
-  {% for k, v in blockArray[count]["top_tiles"].iteritems() %}
+  {% for k, v in blockArray[count]["top_tiles"].items() %}
     updateDivs_block_{{count}}.push("{{v[1]}}");
     {% if v[3]|length > 3 %}
       updateDivsType_block_{{count}}.push("{{v[3]}}");

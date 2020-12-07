@@ -5,17 +5,18 @@
                         </li>
                         <li><a href="javascript:void(0)" id="defaultOpen" class="tablinks"
                                onclick="openCat(event, 'plugins')">Plugins</a>
- <!--                   </li>
+                        </li>
                         <li><a href="javascript:void(0)" class="tablinks"
                                onclick="openCat(event, 'settings')">Settings</a>
-                         </li>
-                         <li><a href="javascript:void(0)" class="tablinks"
-                            onclick="openCat(event, 'config')">Config</a></li>
--->
+                        </li>
+                        <li><a href="javascript:void(0)" class="tablinks"
+                               onclick="openCat(event, 'config')">Config</a>
+                        </li>
+
                     </ul>
 <div id="updates" class="tabcontent">
     <div id="updateView_available" class="hide_update">
-      <h2>A new update is available for Domoboard.</h2><br />
+      <h2>A new update is available for Dzgaboard.</h2><br />
       The current version is <b><span id="curver_settings"></span></b><br />
       The new version available is: <b><span id="newver_settings"></span></b><br />
       <br />
@@ -23,7 +24,7 @@
       <p><b>Install the new version by pressing the "Upgrade" button below.</b></p>
       {% endif %}
       {% if debug == False %}
-      <p><b>Upgrading through Domoboard is only possible when running in debug mode (pass "-d" parameter to server.py). Manual upgrade is possible by performing a "git pull" command.</b></p>
+      <p><b>Upgrading through Dzgaboard is only possible when running in debug mode (pass "-d" parameter to server.py). Manual upgrade is possible by performing a "git pull" command.</b></p>
       {% endif %}
       {% if debug == True %}
       <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:performUpgrade()">Upgrade</button>
@@ -31,11 +32,11 @@
     </div>
     <div id="updateView_not_available" class="hide_update">
       <h2>Hurray!</h2><br />
-      There is no update available for Domoboard.<br /><br />
+      There is no update available for Dzgaboard.<br /><br />
     </div>
     <div id="updateView_no_git" class="hide_update">
       <h2>To bad!</h2><br />
-      Your Domoboard cannot update itself. Domoboard needs to be installed through a git clone in order to support auto-update. Updates are performed using git.<br /><br />
+      Your Dzgaboard cannot update itself. Dzgaboard needs to be installed through a git clone in order to support auto-update. Updates are performed using git.<br /><br />
     </div>
 </div>
 <div id="plugins" class="tabcontent">
@@ -46,7 +47,7 @@
   <div id="configView">
     <div class="dropdown">
       <select id="dropdownMenuChoice" onChange="javascript:chgAction()">
-          {% for k, v in configValues["navbar"].iteritems() %}
+          {% for k, v in configValues["navbar"].items() %}
               {% if v is iterable and v is not string %}
               <option>{{ v[0] }}</option>
               {% else %}
@@ -55,7 +56,7 @@
           {% endfor %}
       </select>
     </div>
-    {% for k, v in configValues["navbar"].iteritems() %}
+    {% for k, v in configValues["navbar"].items() %}
       {% if v is iterable and v is not string %}
       {% set v = v[0] %}
       {% endif %}
@@ -84,7 +85,7 @@
                         <input type="text" class="form-control" name="description">
                         <div class="dropdown">
                             <select id="dropDownPage">
-                                {% for k, v in configValues["navbar"].iteritems() %}
+                                {% for k, v in configValues["navbar"].items() %}
                                     <option>{{ v[0] }}</option>
                                 {% endfor %}
                             </select>

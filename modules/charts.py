@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # Provides all charts functionality
 
-import json, re, domoticz
+import json, re
+from modules import domoticz
 from flask import request
 
 def barChart():

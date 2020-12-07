@@ -21,7 +21,7 @@ $(document).ready(function() {
   var barChartElements=[];
   var barChartElementsNames=[];
 
-  {% for k, v in blockArray[count]["bar_charts"].iteritems() %}
+  {% for k, v in blockArray[count]["bar_charts"].items() %}
   barChartElements.push("{{v[1]}}");
   barChartElementsNames.push("{{k}}");
   {% endfor %}

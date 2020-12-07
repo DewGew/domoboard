@@ -17,7 +17,7 @@
 <script>
 $(document).ready(function() {
 
-  {% for k, v in blockArray[count]["news"].iteritems() %}
+  {% for k, v in blockArray[count]["news"].items() %}
   {% if v[0] %}
       $('#s_title_{{ count }}').html("{{ v[0] }}");
   {% endif %}

@@ -2,7 +2,7 @@
 # This file contains the functions used for web based configuration of domoboard
 
 import git
-import api
+from modules import api
 from flask import request
 
 
