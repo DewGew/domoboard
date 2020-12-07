@@ -1,15 +1,16 @@
 // Function to request the Domoboard API
-function requestAPI(url, callback) {
-  $.ajax({
+function requestAPI(url, callback, sync) {
+  if (sync == undefined) { syncChoice = true; } else { syncChoice = false; }
+  return $.ajax({
     type: 'POST',
     url: url,
     data: { _csrf_token: csrf_token },
     success:  function (data) {
 			if (typeof callback === "function"){
 			callback(data);
-			}
+    } else { return data; }
     },
-    async:true
+    async:syncChoice
   });
 }
 
@@ -116,12 +117,14 @@ function refreshTopTiles(updateDivs, block, tilesPreviousArray, updateDivsTypeAr
 		}
 		//var re = /(-?\d+\.?\d*) (.+)/;  -- old regex didn't found an temp value
     var re = /(-?\d+[\.*]?\d*)(\s*.*)/;
+
 		tilesArray = re.exec(data);
 
 		if (tilesArray != null) {
       if (updateDivsUnitsArray[i]) {
         tilesArray[2] = updateDivsUnitsArray[i];
       }
+
 			if (parseFloat(tilesArray[1]) < parseFloat(tilesPreviousArray[i])) {
 				$("#" + block + divID + "_" + updateDivsTypeArray[i]).html(tilesArray[1] + "<font size=2vw>" + tilesArray[2] + "</font>");
         $("#" + block + divID + "_" + updateDivsTypeArray[i] + "_arrow").removeClass("green");
@@ -189,14 +192,18 @@ function refreshMapLocation(idx, iframe) {
 
 // Dimmers functions
 function dimmerSlider(updateDimmers, block) {
+
   $.each(updateDimmers, function(i, dimmerID) {
     url = "/api?type=devices&rid=" + dimmerID;
     requestAPI(url, function(d) {
   		var percentage = JSON.parse(d).result[0].Level;
+
   		$('#dimmer_' + dimmerID + "_block_" + block).slider({min:0, max:100, value: percentage}).on('slideStop', function(ev) {
         setDimmerState('dim_' + dimmerID + "_block_" + block + "_track", dimmerID);
         changeDimmerSlider($(this).attr('id'), ev.value)
+
       } ).data('slider');
+      $('#dimmer_' + dimmerID + "_block_" + block).slider('refresh');
       setDimmerState('dim_' + dimmerID + "_block_" + block + "_track", dimmerID);
      });
   });
@@ -210,6 +217,7 @@ function setpointSlider(updateSetpoints, block) {
   		$('#setpoint_slider' + setpoint[0] + "_block_" + block).slider({min:parseInt(setpoint[1]), max:parseInt(setpoint[2]), value: parseFloat(percentage)}).on('slideStop', function(ev) {
         changeSetpoint(setpoint[0], parseFloat(ev.value));
       } ).data('slider');
+      $('#setpoint_slider' + setpoint[0] + "_block_" + block).slider('refresh');
       $('#stpnt_' + setpoint[0] + "_block_" + block + '_track').css({'background-image': '-webkit-linear-gradient(top, #f9f9f9 0%, red 100%)', 'background-image': '-o-linear-gradient(top, #f9f9f9 0%, red 100%)', 'background-image': 'linear-gradient(to bottom, #f9f9f9 0%, red 100%)'});
      });
   });
@@ -303,6 +311,12 @@ function RefreshLogData() {
   $('#showlog').html(text);
   });
   $.refreshTimerGraph = setInterval(RefreshLogData, 2000);
+}
+
+// getAllDomoticzDevices
+function getDomoticzDevices() {
+  var url = flask_server + "/api?type=devices&filter=all&used=true&order=Name";
+ return JSON.parse(requestAPI(url, undefined, true)['responseText']).result;
 }
 
 // Settings functions
