@@ -443,7 +443,7 @@ function performUpgrade() {
 
 function checkVersion(branch) {
   $.ajax({
-    url: "https://domoboard.nl/version.md",
+    url: "https://localhost/version.md",
     cache: false,
     success: function( data ) {
       if (branch == "master") {
@@ -467,7 +467,7 @@ function checkVersion(branch) {
 
 function checkVersionSettings(branch) {
   $.ajax({
-    url: "https://domoboard.nl/version.md",
+    url: "https://localhost/version.md",
     cache: false,
     success: function( data ) {
       if (branch == "master") {

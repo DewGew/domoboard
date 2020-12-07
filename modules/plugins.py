@@ -151,11 +151,11 @@ def indexPlugins(params={}):
         if not os.path.isfile(indexFolderPath + 'README.md'):
                 shutil.rmtree(indexFolderPath)
                 try:
-                    git.Repo.clone_from("https://github.com/wez3/domoboard-plugins.git", indexFolderPath)
+                    git.Repo.clone_from("https://github.com/dewgew/dzgaboard-plugins.git", indexFolderPath)
                 except:
                     print 'indexed'
         else:
-            git.cmd.Git(indexFolderPath).pull("https://github.com/wez3/domoboard-plugins.git")
+            git.cmd.Git(indexFolderPath).pull("https://github.com/dewgew/dzgaboard-plugins.git")
         folders = filter(lambda x: os.path.isdir(os.path.join(indexFolderPath, x)),
                          os.listdir(indexFolderPath))
         return indexPlugins({'action': 'getPlugins'})
