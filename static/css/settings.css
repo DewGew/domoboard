@@ -58,10 +58,11 @@ ul.tab li a {
     padding: 14px 16px;
     text-decoration: none;
     transition: 0.3s;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 /* Change background color of links on hover */
+ul.tab li a.active,
 ul.tab li a:hover {
     background-color: #ddd;
 }

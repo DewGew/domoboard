@@ -5,7 +5,7 @@ import flask_login
 from secrets import compare_digest                                  
 from collections import OrderedDict
 import argparse, socket, re, logging
-import hashlib, configobj, json, sys, os
+import hashlib, configobj, json, sys, os, yaml
 import modules.api as api
 import modules.domoticz as domoticz
 import modules.security as security
@@ -61,8 +61,8 @@ def generatePage():
         blockArray = []
         configValues = OrderedDict()
         configValues["navbar"] = config["navbar"]["menu"]
-        configValues["server_location"] = config["general_settings"]["server"].get("url")
-        configValues["flask_server_location"] = config["general_settings"]["server"].get("flask_url")
+        configValues["server_location"] = config["general_settings"]["server"].get("domoticz_url")
+        configValues["flask_server_location"] = config["general_settings"]["server"].get("dzgaboard_url")
         configValues["domoboard"] = config["general_settings"]["domoboard"]
         configValues["display_components"] = strToList(config[requestedRoute]["display_components"].get("components"))
         configValues["config"] = config
@@ -151,7 +151,7 @@ def configValueExists(value):
     return exists
 
 def validateConfigFormat(config):
-    requiredSettings = {"general_settings/server": ["url", "flask_url", "user", "password", "secret_key"],
+    requiredSettings = {"general_settings/server": ["domoticz_url", "dzgaboard_url", "user", "password", "secret_key"],
                         "general_settings/domoboard": ["time", "date", "autologon"],
                         "navbar/menu": [None] }
     for sect, fields in requiredSettings.items():
@@ -175,33 +175,44 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     logFormatter = logging.Formatter('[%(asctime)s %(levelname)s]: %(message)s')
     logger = logging.getLogger()
-    logfile = logging.FileHandler("logs/domoboard.log")
+    logfile = logging.FileHandler("logs/dzgaboard.log", mode='w', encoding='utf-8')
     logfile.setFormatter(logFormatter)
     logger.addHandler(logfile)
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--config", dest="configfile",
-                  help="Specify a config file", metavar="<CONFIG>")
+    # parser.add_argument("-c", "--config", dest="configfile",
+                  # help="Specify a config file", metavar="<CONFIG>")
     parser.add_argument("-d", "--debug", dest="debug", action="store_true",
                   help="Run in debug mode")
     args = parser.parse_args()
-    if args.configfile:
-       configfile = args.configfile
-    else:
-       sys.exit("Please specify a config file with the -c parameter.")
-    if os.path.isfile(configfile):
-        unsanitizedConfig = configobj.ConfigObj(configfile)
-    else:
-        sys.exit("Config file {} does not exist.".format(configfile))
-
+    # if args.configfile:
+       # configfile = args.configfile
+    # else:
+       # sys.exit("Please specify a config file with the -c parameter.")
+    # if os.path.isfile(configfile):
+        # unsanitizedConfig = configobj.ConfigObj(configfile)
+    # else:
+        # sys.exit("Config file {} does not exist.".format(configfile))
+    
+    try:
+        print('Loading configuration...')
+        with open('config.yaml', 'r') as conf:
+            unsanitizedConfig = yaml.safe_load(conf)
+    except yaml.YAMLError as exc:
+        print('ERROR: Please check config.yaml')
+           
     config = json.loads(security.sanitizeString(json.dumps(unsanitizedConfig)), object_pairs_hook=OrderedDict)
-    watchfiles = [configfile]
+    # configuration = json.loads(security.sanitizeString(json.dumps(unsanitizedConfiguration)), object_pairs_hook=OrderedDict)
+    watchfiles = ['config.yaml']
     config = appendDefaultPages(config)
     api.setConfig(config, unsanitizedConfig)
     api.init()
     validateConfigFormat(config)
+    print("1-------------------->", config)
+    # validateConfigFormat(configuration)
+    # print("2-------------------->", configuration)
     domoticz.checkDomoticzStatus(config)
-    server_location = config["general_settings"]["server"]["url"]
-    flask_server_location = config["general_settings"]["server"]["flask_url"]
+    server_location = config["general_settings"]["server"]["domoticz_url"]
+    flask_server_location = config["general_settings"]["server"]["dzgaboard_url"]
     # auth = Auth(app, login_url_name='login_form')
     # auth.user_timeout = 0
 

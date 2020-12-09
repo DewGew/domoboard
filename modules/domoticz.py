@@ -7,7 +7,7 @@ from modules import api
 def queryDomoticz(url):
     config = api.getConfig()
     try:
-        r = requests.get('http://' + config["general_settings"]["server"]["url"] + '/json.htm' + url,
+        r = requests.get('http://' + config["general_settings"]["server"]["domoticz_url"] + '/json.htm' + url,
         auth=(config["general_settings"]["server"].get("user"), config["general_settings"]["server"].get("password")), timeout=5.00)
     except:
         return "{}"
