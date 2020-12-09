@@ -5,7 +5,7 @@ import flask_login
 from secrets import compare_digest                                  
 from collections import OrderedDict
 import argparse, socket, re, logging
-import hashlib, configobj, json, sys, os, yaml
+import hashlib, json, sys, os, yaml
 import modules.api as api
 import modules.domoticz as domoticz
 import modules.security as security

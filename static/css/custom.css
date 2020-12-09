@@ -508,7 +508,7 @@ table.no-margin .progress {
     }
 }
 
-@media (min-width: 192px) and (max-width: 1270px) {
+@media (min-width: 192px) and (max-width: 992px) {
     .hidden-small {
         display: none !important;
     }
