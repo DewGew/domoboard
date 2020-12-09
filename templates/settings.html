@@ -3,6 +3,7 @@
                         <li><a href="javascript:void(0)" id="defaultOpen" class="tablinks"
                                onclick="openCat(event, 'updates')">Updates</a>
                         </li>
+                        {% if isAdmin %}
                         <li><a href="javascript:void(0)" id="defaultOpen" class="tablinks"
                                onclick="openCat(event, 'plugins')">Plugins</a>
                         </li>
@@ -12,6 +13,7 @@
                         <li><a href="javascript:void(0)" class="tablinks"
                                onclick="openCat(event, 'config')">Config</a>
                         </li>
+                        {% endif %}
 
                     </ul>
 <div id="updates" class="tabcontent">

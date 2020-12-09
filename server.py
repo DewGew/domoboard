@@ -14,6 +14,7 @@ import modules.webconfig as webconfig
 app = Flask(__name__)
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = "login_form"
 
 users = {}
 
@@ -27,19 +28,20 @@ def user_loader(username):
 
     user = User()
     user.id = username
+    user.group = users[username]['group']
     return user
     
 @login_manager.request_loader
 def request_loader(request):
     if session:
         security.csrfProtect()
+        
     config = api.getConfig()
                 
     for k, v in config["general_settings"]["users"].items():
-                                        
-                                             
-        users[k] = {'password': v}
-        
+        # users[k] = {'password': v}
+        users[k] = v
+    
     username = request.form.get('username')
     password = request.form.get('password', '')
     if username not in users:
@@ -47,6 +49,7 @@ def request_loader(request):
 
     user = User()
     user.id = username
+    user.group = users[username]['group']
     try:
         user.is_authenticated = compare_digest(password, users[username]['password'])
     except:
@@ -78,6 +81,7 @@ def generatePage():
                                 configValues = configValues,
                                 blockArray = blockArray,
                                 _csrf_token = session['_csrf_token'],
+                                isAdmin = flask_login.current_user.group == 'admin',
                                 version = webconfig.getVersion(),
                                 branch = webconfig.getCurrentBranch(),
                                 debug = app.debug)
@@ -123,6 +127,7 @@ def login_form():
         if username in users and compare_digest(password, users[username]['password']):
             user = User()
             user.id = username
+            user.group = users[username]['group']
             flask_login.login_user(user)
             security.generateCsrfToken()
             return redirect(url_for('dashboard'))
@@ -172,49 +177,42 @@ def appendDefaultPages(config):
     return config
 
 if __name__ == '__main__':
+    
+    configfile = 'config/config.yaml'
+    logfile = 'logs/dzgaboard.log'
+    
     logging.basicConfig(level=logging.INFO)
     logFormatter = logging.Formatter('[%(asctime)s %(levelname)s]: %(message)s')
     logger = logging.getLogger()
-    logfile = logging.FileHandler("logs/dzgaboard.log", mode='w', encoding='utf-8')
-    logfile.setFormatter(logFormatter)
-    logger.addHandler(logfile)
+    logs = logging.FileHandler(logfile, encoding='utf-8')
+    logs.setFormatter(logFormatter)
+    logger.addHandler(logs)
+    
     parser = argparse.ArgumentParser()
-    # parser.add_argument("-c", "--config", dest="configfile",
-                  # help="Specify a config file", metavar="<CONFIG>")
     parser.add_argument("-d", "--debug", dest="debug", action="store_true",
                   help="Run in debug mode")
     args = parser.parse_args()
-    # if args.configfile:
-       # configfile = args.configfile
-    # else:
-       # sys.exit("Please specify a config file with the -c parameter.")
-    # if os.path.isfile(configfile):
-        # unsanitizedConfig = configobj.ConfigObj(configfile)
-    # else:
-        # sys.exit("Config file {} does not exist.".format(configfile))
     
-    try:
-        print('Loading configuration...')
-        with open('config.yaml', 'r') as conf:
-            unsanitizedConfig = yaml.safe_load(conf)
-    except yaml.YAMLError as exc:
-        print('ERROR: Please check config.yaml')
-           
+    configfile = 'config/config.yaml'
+    if os.path.isfile(configfile):
+        try:
+            print('Loading configuration...')
+            with open(configfile, 'r') as conf:
+                unsanitizedConfig = yaml.safe_load(conf)
+        except yaml.YAMLError as exc:
+            print('ERROR: Please check config.yaml')
+    else:
+        sys.exit("Config file {} does not exist.".format(configfile))
+    
     config = json.loads(security.sanitizeString(json.dumps(unsanitizedConfig)), object_pairs_hook=OrderedDict)
-    # configuration = json.loads(security.sanitizeString(json.dumps(unsanitizedConfiguration)), object_pairs_hook=OrderedDict)
-    watchfiles = ['config.yaml']
+    watchfiles = [configfile]
     config = appendDefaultPages(config)
     api.setConfig(config, unsanitizedConfig)
     api.init()
     validateConfigFormat(config)
-    print("1-------------------->", config)
-    # validateConfigFormat(configuration)
-    # print("2-------------------->", configuration)
     domoticz.checkDomoticzStatus(config)
     server_location = config["general_settings"]["server"]["domoticz_url"]
     flask_server_location = config["general_settings"]["server"]["dzgaboard_url"]
-    # auth = Auth(app, login_url_name='login_form')
-    # auth.user_timeout = 0
 
     app.secret_key = config["general_settings"]["server"]["secret_key"]
     app.add_url_rule('/', 'index', index)

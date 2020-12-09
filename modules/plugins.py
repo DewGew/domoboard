@@ -18,7 +18,7 @@ def loadPlugins():
                plugin[name].init()
             except ImportError as msg:
                moduleName = str(msg).split(' ')[len(str(msg).split(' ')) -1]
-               sys.exit("Error occured during loading imports for the plugin {}: {}. Install it with 'easy_install {}' or 'pip install {}'".format(name, msg, moduleName , moduleName))
+               print("Error occured during loading imports for the plugin {}: {}. Install it with 'pip install {}'".format(name, msg, moduleName.replace("'", "")))
     return plugin
 
 def getPluginDict():
