@@ -1,0 +1,7 @@
+env/
+modules/__pycache__
+logs/dzgaboard.log
+.github/
+config/
+config/config.yaml
+config/smart-home-key.json

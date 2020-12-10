@@ -1,0 +1,110 @@
+<div class="col-md-12 col-sm-6 col-xs-12">
+  <div class="x_panel">
+    <div class="x_title green">
+      <h2>Congratulations!</h2>
+      <ul class="nav navbar-right panel_toolbox">
+        </li>
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div id="updateValue" style="display: inline-block;">
+    <p class="purple">You have successfully installed Dzgaboard. Modify the config.yaml file to suit your needs. You find it in <code>"../dzgaboard/config"</code> folder. There is also an example file</p>
+    <p class="purple">You can make some limited changes also in <a href="/settings" class="blue">Settings page</a> but requires further development. Please use the config file for advanced changes to the dashboard.</p>
+    <h5>General settings in config.yaml:</h5>
+    <pre>
+general_settings:
+  server:
+    <span class="green"># This is the internal IP-address including port of the Dzgaboard server</span>
+    dzgaboard_url: 0.0.0.0:8181
+    <span class="green"># IP-address and port of Domoticz backend</span>
+    domoticz_url: 0.0.0.0:8080
+    <span class="green"># Username and password for Domoticz (if required)</span>
+    user: Username  
+    password: Password
+    <span class="green"># A random secret key used for Python authentication. Change to anything random.</span>    
+    secret_key: 6BaSYEI3ZcInlu31B4iUx  
+  users:
+    <span class="green"># Add users for Domoboard here. In this case login group "user" with username "username" and password "password"
+    # or group "admin" with username "admin" and password "admin"</span>
+    username:
+        group: user
+        password: password  
+    admin:
+        group: admin
+        password: admin
+  domoboard:
+    <span class="green"># True/False: show time in top bar</span>
+    time: 'True'
+    <span class="green"># True/False: show date in top bar</span>
+    date: 'True'
+    <span class="green"># Change this to display date/time in local language and format</span>
+    language: gb
+    <span class="green"># Google Maps Embed API key</span>
+    google_maps_api_key: XXX    
+    </pre>
+    <h5>Navbar in config.yaml:</h5>
+    <pre>
+<span class="green"># Navbar. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.</span>
+navbar:
+  menu:
+    Dashboard:
+      - dashboard
+      - dashboard
+    Livingroom: 
+      - livingroom
+      - home
+    Bedroom:
+      - bedroom
+      - bed
+    Security:
+      - security
+      - camera
+    Settings:
+      - settings
+      - wrench
+    </pre>
+    <h5>Pages in config.yaml:</h5>
+    <pre>
+<span class="green"># Each navbar item needs a section. Components specify which components are displayed on the page.
+# Other subsections contain names, Domoticz IDX's and options of the components displayed.</span>
+dashboard:
+  display_components:
+    components:
+      - top_tiles
+      - line_charts
+      - map[1]
+      - switches
+      - power_usage
+  top_tiles:
+    Temperatur Outside:
+      - '236'
+      - fire
+  line_charts:
+    Temperatur Outside:
+      - '236'
+      - month
+      - temp
+  switches:
+    Samsung TV:
+      - '15'
+      - switch
+    Thermostaat_slider:
+      - '476'
+      - setpoint_slider
+      - '18'
+      - '28'
+    Selector:
+      - '472'
+      - selector
+  power_usage:
+    Total playstation: '224'
+  map:
+    1:
+      Location: '479'
+    </pre>
+    </div>
+
+  </div>
+</div>

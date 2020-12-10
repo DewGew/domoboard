@@ -16,7 +16,7 @@
 <script type="text/javascript" charset="utf-8">
 
 $(document).ready(function() {
-  {% for k, v in blockArray[count]["domoticz_smart_charts"].iteritems() %}
+  {% for k, v in blockArray[count]["domoticz_smart_charts"].items() %}
   ShowSmartLog("domoticz-chart-block-{{count}}",{{v[1]}},"{{k}}", "{{v[3]}}", "{{v[2]}}");
   $("div#title_block_{{count}} h2").html("{{k}}");
   setInterval(ShowSmartLog,60000,"domoticz-chart-block-{{count}}",{{v[1]}},"{{k}}", "{{v[3]}}", "{{v[2]}}");

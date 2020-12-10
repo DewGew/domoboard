@@ -4,7 +4,7 @@
 <div class="col-md-6 col-sm-6 col-xs-12">
   <div class="x_panel">
     <div class="x_title">
-      <h2 id="s_title_{{ count }}">Schakelaars</h2>
+      <h2 id="s_title_{{ count }}">Switches</h2>
       <ul class="nav navbar-right panel_toolbox">
         <li><a class="close-link"><i class="fa fa-close"></i></a>
         </li>
@@ -15,7 +15,7 @@
       <br>
       <form class="form-horizontal form-label-left">
         <table class="table" style="width: auto;">
-          {% for k, v in blockArray[count]["switches"].iteritems() %}
+          {% for k, v in blockArray[count]["switches"].items() %}
           <tr>
             {% if "dimmer" in v[2] or "rgb" in v[2] %}
                 <td style="border-top: none;  vertical-align: middle;"><a id="Adim_{{v[1]}}_block_{{count}}" style="cursor: pointer;"><label style="cursor: pointer;" class=""> &nbsp;{{k}}</label></a></td>
@@ -103,7 +103,7 @@ $(document).ready(function() {
   var updateSetpoints_block_{{count}}=[];
   var updateSetpoint_sliders_block_{{count}}=[];
 
-  {% for k, v in blockArray[count]["switches"].iteritems() %}
+  {% for k, v in blockArray[count]["switches"].items() %}
 
       {% if v[0] %}
           $('#s_title_{{ count }}').html("{{ v[0] }}");

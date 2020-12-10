@@ -8,7 +8,7 @@
         <div class="left_col scroll-view">
 
           <div class="navbar nav_title" style="border: 0;">
-            <a href="/dashboard" class="site_title"><i class="fa fa-home"></i> <span>Domoboard</span></a>
+            <a href="/dashboard" class="site_title"><i class="fa fa-home"></i> <span>Dzgaboard</span></a>
           </div>
           <div class="clearfix"></div>
 
@@ -19,7 +19,7 @@
 
             <div class="menu_section">
               <ul class="nav side-menu">
-                {% for k, v in configValues["navbar"].iteritems() %}
+                {% for k, v in configValues["navbar"].items() %}
                   {% if v is not string %}
                   <li><a href="{{v[0]}}"> <i class="fa fa-{{v[1]}} fa-fw" aria-hidden="true"></i> {{k}}</a></li>
                   {% else %}
@@ -85,7 +85,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <h2>A new update is available for Domoboard.</h2><br />
+              <h2>A new update is available for Dzgaboard.</h2><br />
               The current version is <b><span id="curver"></span></b>.<br />
               The new version available is: <b><span id="newver"></span></b>.<br />
               <br />
@@ -93,7 +93,7 @@
               <p><b>Install the new version by pressing the "Upgrade" button below.</b></p>
               {% endif %}
               {% if debug == False %}
-              <p><b>Upgrading through Domoboard is only possible when running in debug mode (pass "-d" parameter to server.py). Manual upgrade is possible by performing a "git pull" command.</b></p>
+              <p><b>Upgrading through Dzgaboard is only possible when running in debug mode (pass "-d" parameter to server.py). Manual upgrade is possible by performing a "git pull" command.</b></p>
               {% endif %}
             </div>
             <div class="modal-footer">

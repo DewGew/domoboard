@@ -2,7 +2,7 @@
 # This file contains the functions regarding the plugin manager.
 
 import git, shutil, os, imp, sys
-import security, api
+from modules import security, api
 import re
 
 indexes = {}
@@ -18,7 +18,7 @@ def loadPlugins():
                plugin[name].init()
             except ImportError as msg:
                moduleName = str(msg).split(' ')[len(str(msg).split(' ')) -1]
-               sys.exit("Error occured during loading imports for the plugin {}: {}. Install it with 'easy_install {}' or 'pip install {}'".format(name, msg, moduleName , moduleName))
+               print("Error occured during loading imports for the plugin {}: {}. Install it with 'pip install {}'".format(name, msg, moduleName.replace("'", "")))
     return plugin
 
 def getPluginDict():
@@ -94,10 +94,10 @@ def indexPlugins(params={}):
                                 _text = re.sub('\n', '<br>', _text)
                             fol[_check] = _text
 
-                    if not i in (f['folder'] for f in indexes.itervalues()):
+                    if not i in (f['folder'] for f in indexes.values()):
                         indexes[len(indexes)] = fol
                     else:
-                        for tmp in indexes.itervalues():
+                        for tmp in indexes.values():
                             if i == tmp['folder']:
                                 for k in fol:
                                     if k != 'id':
@@ -153,7 +153,7 @@ def indexPlugins(params={}):
                 try:
                     git.Repo.clone_from("https://github.com/dewgew/dzgaboard-plugins.git", indexFolderPath)
                 except:
-                    print 'indexed'
+                    print('indexed')
         else:
             git.cmd.Git(indexFolderPath).pull("https://github.com/dewgew/dzgaboard-plugins.git")
         folders = filter(lambda x: os.path.isdir(os.path.join(indexFolderPath, x)),

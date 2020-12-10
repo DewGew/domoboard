@@ -28,7 +28,7 @@
     </div>
     <div style=";overflow: hidden">
       <br>
-      {% for k, v in blockArray[count]["camera"].iteritems() %}
+      {% for k, v in blockArray[count]["camera"].items() %}
         {% if v[0] %}
           <script>
             $('#s_title_{{ count }}').html("{{ v[0] }}");
@@ -44,7 +44,7 @@
 </div>
 <script>
 
-{% for k, v in blockArray[count]["camera"].iteritems() %}
+{% for k, v in blockArray[count]["camera"].items() %}
   if ("{{v[1]}}".split(':')[0] == 'rtsp')  {
     $('#cam_body_{{ count }}').append('<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab" id="vlc" name="vlc" class="vlcPlayer" events="True">  <param name="Src" value="{{v[1]}}" /> <!-- ie -->  <param name="ShowDisplay" value="True" />  <param name="AutoLoop" value="True" />  <param name="AutoPlay" value="True" />  <!-- win chrome and firefox-->  <embed id="vlcEmb"  type="application/x-google-vlc-plugin" version="VideoLAN.VLCPlugin.2" autoplay="yes" loop="no" width="640" height="480" target="{{v[1]}}" ></embed></object>');
   } else {

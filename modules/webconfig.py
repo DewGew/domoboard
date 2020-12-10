@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # This file contains the functions used for web based configuration of domoboard
 
-import git
-import api
+import git, yaml
+from modules import api
 from flask import request
+
+configfile = 'config/config.yaml'
 
 
 def writeToConfig(idx, page, component, description, extra):
@@ -11,7 +13,10 @@ def writeToConfig(idx, page, component, description, extra):
     section = dict(originalCfg[page][component])
     section[description] = idx
     originalCfg[page][component] = section
-    originalCfg.write()
+       
+    file = open(configfile, 'w+')
+    file.write(yaml.safe_dump(originalCfg, allow_unicode=True, sort_keys=False))
+    file.close()
 
 def indexWebConfig(params={}):
     if 'page' in params:

@@ -14,12 +14,12 @@
         <thead>
           <tr>
             <th>Component</th>
-            <th>Verbruik</th>
+            <th>Consumption</th>
 
           </tr>
         </thead>
         <tbody>
-          {% for k, v in blockArray[count]["power_usage"].iteritems() %}
+          {% for k, v in blockArray[count]["power_usage"].items() %}
           <tr>
             <td>{{k}}</td>
             <td id="power_usage_{{v[1]}}_{{count}}">{{v[2]}}</td>
@@ -38,7 +38,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
   var updatePowerUsage_{{count}}=[];
-  {% for k, v in blockArray[count]["power_usage"].iteritems() %}
+  {% for k, v in blockArray[count]["power_usage"].items() %}
   updatePowerUsage_{{count}}.push("{{v[1]}}");
   {% endfor %}
   refreshPowerUsage(updatePowerUsage_{{count}}, "{{count}}");
