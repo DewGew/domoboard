@@ -32,15 +32,15 @@ Install Dzgaboard dependencies:
 pip install -r requirements.txt
 ```
 
-Modify the config file to suit your needs. Start Domoboard by executing:
+Start Domoboard by executing:
 
 ```
-python server.py
+python3 server.py
 ```
-
+Modify the config file to suit your needs. Then restart dzgaboard server.
 It is possible to run Dzgaboard in "debug" mode by running the command:
 ```
-python server.py
+python3 server.py -d
 ```
 
 To reactivate the virtualenv later on repeat the "Start the virtualenv" step. 
