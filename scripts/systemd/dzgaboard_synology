@@ -10,7 +10,7 @@ start_daemon ()
 {	
 	source ${INSTALL_DIR}/${NAME}/env/bin/activate
     cd ${NAME}
-	nohup python3 ${INSTALL_DIR}/${NAME}/server.py -c config.conf > ${LOG_FILE} &
+	nohup python3 ${INSTALL_DIR}/${NAME}/server.py -d > ${LOG_FILE} &
 	echo $! > ${PID_FILE}
 	sleep 10
 }

@@ -1,0 +1,261 @@
+general_settings:
+  server:
+    # This is the internal IP-address including port of the Dzgaboard server
+    dzgaboard_url: 0.0.0.0:8181
+    # IP-address and port of Domoticz backend
+    domoticz_url: 0.0.0.0:8080
+    # Username and password for Domoticz (if required)
+    user: Username  
+    password: Password
+    # A random secret key used for Python authentication. Change to anything random.    
+    secret_key: 6BaSYEI3ZcInlu31B4iUx  
+  users:
+    # Add users for Domoboard here. In this case login group "user" with username "username" and password "password"
+    # or group "admin" with username "admin" and password "admin"
+    username:
+        group: user
+        password: password  
+    admin:
+        group: admin
+        password: admin
+  domoboard:
+    # True/False: show time in top bar
+    time: 'True'
+    # True/False: show date in top bar
+    date: 'True'
+    # Change this to display date/time in local language and format
+    language: gb
+    # Google Maps Embed API key
+    google_maps_api_key: XXX  
+
+# Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.
+navbar:
+  menu:
+    Dashboard:
+      - dashboard
+      - dashboard
+    Bedroom:
+      - bedroom
+      - bed
+    Security:
+      - securtiy
+      - camera
+    Statistics:
+      - statistics
+      - wrench
+    Server:
+      - server
+      - desktop
+    Settings:
+      - settings
+      - wrench
+
+# Each navbar item needs a section. Components specify which components are displayed on the page.
+# Other subsections contain names, Domoticz IDX's and options of the components displayed.
+dashboard:
+  display_components:
+    components:
+      - top_tiles
+      - line_charts
+      - switches
+      - weather
+      - news
+      - map[1]
+      - map[2]
+      - power_usage
+  top_tiles:
+    Temperature Car:
+      - '22'
+      - car
+    Power Consumtion TV:
+      - '13'
+      - plug
+      - Usage
+      - Watt
+    Total Playstation:
+      - '25'
+      - plug
+      - Usage
+      - Watt
+    Total Bedroom Lamp:
+      - '12'
+      - plug
+      - CounterToday
+      - kWh
+    Temperature Raspberry:
+      - '1'
+      - car
+  line_charts:
+    Temperature bedroom:
+      - '14'
+      - month
+      - temp
+  bar_charts:
+    Total bedroom lamp: '52'
+  switches:
+    Samsung TV:
+      - '3'
+      - switch
+    Bedroom lamp:
+      - '330'
+      - switch
+    Bedroom dimmer:
+      - '123'
+      - dimmer
+    Bedroom lightstrip:
+      - '12'
+      - rgb
+    Open Garage door:
+      - '456'
+      - pushon
+    Close Garage door:
+      - '567'
+      - pushoff
+    Scene Home:
+      - '4'
+      - scene
+    Group kitchen lights:
+      - '5'
+      - group
+    Thermostat_slider:
+      - '71'
+      - setpoint_slider
+      - '18'
+      - '28'
+    Selector:
+      - '201'
+      - selector
+  power_usage:
+    Total bedroom lamp: '12'
+    Total playstation: '71'
+  weather:
+    Location: "Eindhoven, NB"
+  map:
+    1:
+      Location: '21'
+    2:
+      Location: '21'
+  news:
+    rssfeed: http://www.nu.nl/rss/Algemeen
+
+statistics:
+  display_components:
+   components:
+      - domoticz_smart_charts[1]
+      - domoticz_smart_charts[2]
+      - domoticz_temp_charts
+   domoticz_smart_charts:
+      1:
+        Energy:
+          - '150'
+          - week
+          - energy
+      2:
+        Gas:
+          - '151'
+          - month
+          - gas
+   domoticz_temp_charts:
+      Temperature:
+        - '74'
+        - day
+        - temp
+
+bedroom:
+  display_components:
+    components:
+      - top_tiles
+      - line_charts
+      - bar_charts
+      - donut_charts
+      - switches
+      - power_usage
+  top_tiles:
+    Temperature:
+      - '110'
+      - fire
+    UV:
+      - '114'
+      - lightbulb-o
+  switches:
+    Samsung TV:
+      - '12'
+      - switch
+    Lamp:
+      - '41'
+      - switch
+    Chromecast:
+      - '3'
+      - switch
+    Playstation 4:
+      - '12'
+      - switch
+  line_charts:
+    Temperature:
+      - '12'
+      - day
+      - temp
+  bar_charts:
+    TV: '72'
+    Playstation 4: '1'
+    bedroom lamp: '2'
+  donut_charts:
+    TV: '4'
+    Playstation 4: '90'
+    bedroom lamp: '62'
+  power_usage:
+    Lamp: '32'
+    TV: '33'
+    Chromecast: '73'
+    PS4: '75'
+
+security:
+  display_components:
+    components:
+      - top_tiles
+      - camera[Frontdoor]
+      - camera[Backdoor]
+  top_tiles:
+    Memory:
+      - '12'
+      - percent
+    HDD:
+      - '34'
+      - percent
+  camera:
+    Frontdoor:
+      url: http://x.x.x.x:88/cgi-bin/CGIStream.cgi?cmd=GetMJStream&usr=xxx&pwd=xxx
+    Backdoor:
+      url: rtsp://x.x.x.x:88/cgi-bin/CGIStream.cgi?cmd=GetMJStream&usr=xxx&pwd=xxx
+
+server:
+  display_components:
+    components:
+      - top_tiles
+      - serverlog
+  top_tiles:
+    Memory:
+      - '12'
+      - 'percent'
+    HDD:
+      - '34'
+      - percent
+    Temperature:
+      - '54'
+      - fire
+    CPU: 15, percent
+    Backup pi:
+      - '22'
+      - power-off
+    DiskStation:
+      - '28'
+      - power-off
+  line_charts:
+   Temperature:
+     - '4'
+     - day
+     - temp
+
+settings:
+  display_components:
+    components: settings

@@ -1,0 +1,55 @@
+general_settings:
+  server:
+    # This is the internal IP-address including port of the Dzgaboard server
+    dzgaboard_url: 0.0.0.0:8181
+    # IP-address and port of Domoticz backend
+    domoticz_url: 0.0.0.0:8080
+    # Username and password for Domoticz (if required)
+    user: Username  
+    password: Password
+    # A random secret key used for Python authentication. Change to anything random.    
+    secret_key: 6BaSYEI3ZcInlu31B4iUx  
+  users:
+    # Add users for Domoboard here. In this case login group "user" with username "username" and password "password"
+    # or group "admin" with username "admin" and password "admin"
+    username:
+        group: user
+        password: password  
+    admin:
+        group: admin
+        password: admin
+  domoboard:
+    # True/False: show time in top bar
+    time: 'True'
+    # True/False: show date in top bar
+    date: 'True'
+    # Change this to display date/time in local language and format
+    language: gb
+    # Google Maps Embed API key
+    google_maps_api_key: XXX
+    autologon: 'False'
+
+# Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.   
+navbar:
+  menu:
+    Dashboard:
+      - dashboard
+      - dashboard
+    Settings:
+      - settings
+      - wrench
+      
+# Each navbar item needs a section. Components specify which components are displayed on the page.
+# Other subsections contain names, Domoticz IDX's and options of the components displayed.
+dashboard:
+  display_components:
+    components:
+      - top_tiles 
+      - start
+  top_tiles:
+    Welcome: null
+
+Settings:
+    display_components:
+      components:
+        - settings

@@ -27,7 +27,7 @@ fi
 echo " *--------------------**---------------------*"
 echo " Installation for Synology"
 echo " ---------------------------------------------"
-echo " *Note : Domoticz-Google-Assistant is free"
+echo " *Note : Dzgaboard is free"
 echo " *for personal use."
 echo " ---------------------------------------------"
 echo ""
@@ -52,6 +52,7 @@ echo ""
 echo " Create virtual enviroment..."
 echo ""
 wget https://bootstrap.pypa.io/get-pip.py
+sleep 5
 python3 get-pip.py
 python3 -m pip install virtualenv
 python3 -m virtualenv ${INSTALL_DIR}/env
