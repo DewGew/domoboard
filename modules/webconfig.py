@@ -15,7 +15,7 @@ def writeToConfig(idx, page, component, description, extra):
     originalCfg[page][component] = section
        
     file = open(configfile, 'w+')
-    file.write(yaml.safe_dump(originalCfg, allow_unicode=True))
+    file.write(yaml.safe_dump(originalCfg, allow_unicode=True, sort_keys=False))
     file.close()
 
 def indexWebConfig(params={}):

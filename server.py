@@ -194,15 +194,24 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     configfile = 'config/config.yaml'
-    if os.path.isfile(configfile):
-        try:
-            print('Loading configuration...')
-            with open(configfile, 'r') as conf:
-                unsanitizedConfig = yaml.safe_load(conf)
-        except yaml.YAMLError as exc:
-            print('ERROR: Please check config.yaml')
-    else:
-        sys.exit("Config file {} does not exist.".format(configfile))
+    try:
+        print('Loading configuration...')
+        with open(configfile, 'r') as conf:
+            unsanitizedConfig = yaml.safe_load(conf)
+    except yaml.YAMLError as exc:
+        print('ERROR: Please check config.yaml')
+    except FileNotFoundError as err:
+        print('No config.yaml found...')
+        print('Loading default configuration...')
+        file = open('config/default_config', 'r+')
+        content = file.read()
+        print('Create config.yaml...')
+        yamlfile = open(configfile, 'w+')
+        yamlfile.write(content)
+        yamlfile.close()
+        file.close()
+        with open(configfile, 'r') as conf:
+            unsanitizedConfig = yaml.safe_load(conf) 
     
     config = json.loads(security.sanitizeString(json.dumps(unsanitizedConfig)), object_pairs_hook=OrderedDict)
     watchfiles = [configfile]
@@ -225,5 +234,5 @@ if __name__ == '__main__':
     app.add_url_rule('/api', 'api', api.gateway, methods=['POST'])
     try:
         app.run(host=flask_server_location.split(":")[0],port=int(flask_server_location.split(":")[1]), threaded=True, extra_files=watchfiles, debug=args.debug)
-    except (socket.error, exc):
-        sys.exit("Error when starting the Flask server: {}".format(exc))
+    except (socket.error, Exception):
+        sys.exit("Error when starting the Flask server: {}".format(Exception))

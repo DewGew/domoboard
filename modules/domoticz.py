@@ -19,14 +19,16 @@ def checkDomoticzStatus(config):
     try:
         result = json.loads(queryDomoticz("?type=devices&filter=all"))
         resultScene = json.loads(queryDomoticz("?type=scenes&filter=all"))
+        for device in result["result"]:
+            domoticzDevices.append(device["idx"])
+        if 'result' in resultScene:
+            for device in resultScene["result"]:
+                domoticzScenes.append(device["idx"])
+        configuredDevicesInDomoticz(config, domoticzDevices, domoticzScenes)
     except:
-        sys.exit("Domoticz is not reachable.")
-    for device in result["result"]:
-        domoticzDevices.append(device["idx"])
-    if 'result' in resultScene:
-        for device in resultScene["result"]:
-            domoticzScenes.append(device["idx"])
-    configuredDevicesInDomoticz(config, domoticzDevices, domoticzScenes)
+        # sys.exit("Domoticz is not reachable.")
+        print("Domoticz is not reachable.")
+
 
 def configuredDevicesInDomoticz(config, domoticzDevices, domoticzScenes):
     for k, v in config.items():

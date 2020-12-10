@@ -1,0 +1,13 @@
+[Unit]
+Description=Dzgaboard dashboard
+
+[Service]
+Environment=VIRTUAL_ENV=/home/__USER__/dzgaboard/env
+Environment=PATH=/home/__USER__/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/home/__USER__/dzgaboard/env/bin/python3 /home/__USER__/dzgaboard/server.py -d
+StandardInput=tty-force
+User=__USER__
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
