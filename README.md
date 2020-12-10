@@ -37,6 +37,9 @@ Start Domoboard by executing:
 ```
 python3 server.py
 ```
+Now you can goto http://server.ip.adress:8181.
+Default admin login is username: 'admin' and password: 'admin'
+
 Modify the config file to suit your needs. Then restart dzgaboard server.
 It is possible to run Dzgaboard in "debug" mode by running the command:
 ```
