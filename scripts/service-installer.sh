@@ -23,7 +23,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 echo ""
-echo " Installing dzga.service..."
+echo " Installing dzgaboard.service..."
 echo ""
 
 #Get the checkout directory
@@ -35,7 +35,7 @@ GIT_OWNER="$(ls -ld "$GIT_DIR" | awk 'NR==1 {print $3}')"
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 repo_path="$PWD"
 
-for service in systemd/*.service; do
+for service in scripts/systemd/*.service; do
 	sed "s:/home/__USER__/dzgaboard:${repo_path}:g;s:__USER__:${GIT_OWNER}:g" "$service" \
      > "/etc/systemd/system/$(basename "$service")"
 done
