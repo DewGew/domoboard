@@ -2,6 +2,14 @@
 
 Dzgaboard is based on [Domoboard](https://github.com/wez3/domoboard). Dzgaboard is a dashboard for Domoticz based on Python Flask. The decision was made to use Domoticz as an backend because it is a powerful framework for home automation. Flask was choosen to get all the powerful features that Python offers.
 
+# Ubuntu, Raspbarry Pi Installation with autostart
+
+Just open a terminal window and execute this command. Thats it!
+
+```
+bash <(curl -s https://raw.githubusercontent.com/DewGew/dzga-installer/master/dzgaboard_install.sh)
+```
+
 # Manual installation
 
 To manually install Dzgaboard, take the steps below. 
