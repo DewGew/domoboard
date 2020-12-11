@@ -57,7 +57,7 @@ To configure Dzgaboard as a service, create a new file /etc/systemd/system/dzgab
 Description=Dzgaboard dashboard
 
 [Service]
-ExecStart=/home/pi/dzgaboard/bin/python /home/pi/dzgaboard/server.py -d
+ExecStart=/home/pi/dzgaboard/env/bin/python /home/pi/dzgaboard/server.py -d
 WorkingDirectory=/home/pi/dzgaboard/
 Restart=on-failure
 
