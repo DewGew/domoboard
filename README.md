@@ -104,6 +104,7 @@ Just one config is used to configure Dzgaboard. A example can be found the appli
   - group
   - scene
 - blinds
+  - blind
   - venetian
   - inverted
   - percentage
