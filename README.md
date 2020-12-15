@@ -103,6 +103,10 @@ Just one config is used to configure Dzgaboard. A example can be found the appli
   - pushoff
   - group
   - scene
+- blinds
+  - venetian
+  - inverted
+  - percentage
 - camera
 - weather
 - news
