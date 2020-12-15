@@ -73,6 +73,17 @@ function changePush(idx, action) {
   }
 }
 
+// Blinds functions
+function openCloseBlinds(idx, action) {
+  if (action == 'on') {
+    requestAPI(flask_server + "/api?type=command&param=switchlight&idx=" + idx + "&switchcmd=On" );
+  }else if (action == 'off') {
+    requestAPI(flask_server + "/api?type=command&param=switchlight&idx=" + idx + "&switchcmd=Off" );
+  } else {
+    requestAPI(flask_server + "/api?type=command&param=switchlight&idx=" + idx + "&switchcmd=Stop"  );
+  }
+}
+
 function changeScene(idx, action) {
   if (action == 'on') {
     requestAPI(flask_server + "/api?type=command&param=switchscene&idx=" + idx + "&switchcmd=On" );
@@ -209,6 +220,25 @@ function dimmerSlider(updateDimmers, block) {
   });
 }
 
+// Blinds percentage functions
+function blindSlider(updateBlinds, block) {
+
+  $.each(updateBlinds, function(i, blindsID) {
+    url = "/api?type=devices&rid=" + blindsID;
+    requestAPI(url, function(d) {
+  		var percentage = JSON.parse(d).result[0].Level;
+
+  		$('#blinds_percentage_' + blindsID + "_block_" + block).slider({min:0, max:100, value: percentage}).on('slideStop', function(ev) {
+        setDimmerState('blinds_' + blindsID + "_block_" + block + "_track", blindsID);
+        changeBlindSlider($(this).attr('id'), ev.value)
+
+      } ).data('slider');
+      $('#blinds_percentage_' + blindsID + "_block_" + block).slider('refresh');
+      setDimmerState('blinds_' + blindsID + "_block_" + block + "_track", blindsID);
+     });
+  });
+}
+
 function setpointSlider(updateSetpoints, block) {
   $.each(updateSetpoints, function(i, setpoint) {
     url = "/api?type=devices&rid=" + setpoint[0];
@@ -225,6 +255,13 @@ function setpointSlider(updateSetpoints, block) {
 
 function changeDimmerSlider(idx, value) {
   var re = /dimmer_(\d+)_block_\d+/;
+  match = re.exec(idx);
+  ridx = match[1];
+  requestAPI(flask_server + "/api?type=command&param=switchlight&idx=" + ridx + "&switchcmd=Set%20Level&level=" + value);
+}
+
+function changeBlindSlider(idx, value) {
+  var re = /blinds_percentage_(\d+)_block_\d+/;
   match = re.exec(idx);
   ridx = match[1];
   requestAPI(flask_server + "/api?type=command&param=switchlight&idx=" + ridx + "&switchcmd=Set%20Level&level=" + value);
