@@ -1,42 +1,42 @@
 <link href="/static/css/bootstrap-switch.css" rel="stylesheet" type="text/css" />
 <link href="/static/css/bootstrap-slider.css" rel="stylesheet">
-<link href="/static/css/buttons.css" rel="stylesheet" type="text/css" />
-<div class="col-md-6 col-sm-6 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2 id="s_title_{{ count }}">Blinds</h2>
-      <ul class="nav navbar-right panel_toolbox">
+
+<div class="col-lg-6 col-md-12">
+  <div class="card">
+     <div class="card-header card-header-success">
+       <ul class="nav panel_toolbox">
         <li><a class="close-link"><i class="fa fa-close"></i></a>
         </li>
       </ul>
-      <div class="clearfix"></div>
+      <h4 id="s_title_{{ count }}">Blinds</h4>
     </div>
-    <div class="form-group">
-      <br>
-      <form class="form-horizontal form-label-left">
-        <table class="table" style="width: auto;">
-          {% for k, v in blockArray[count]["blinds"].items() %}
-          <tr>
-            <td style="border-top: none;  vertical-align: middle;"><label class=""> &nbsp;{{k}}</label></td>
-            <td style="border-top: none;">
-              {% if "venetian" in v[2]  %}
-              <button id="blindUp_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;</button>
-              <button id="blindStop_{{v[1]}}_block_{{count}}" class="btn  btn-danger btn-circle">&nbsp;<li class="fa fa-stop" aria-hidden="true"></i>&nbsp;</button>
-              <button id="blindDown_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</button>
-              {% elif "inverted" in v[2]  %}
-              <button id="blindUp_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;</button>
-              <button id="blindDown_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</button>
-              {% elif "percentage" in v[2] %}
-              <input id="blinds_percentage_{{v[1]}}_block_{{count}}" data-slider-id='blinds_{{v[1]}}_block_{{count}}' type="text" test={{ v[2] }} state="on" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14" />
-              {% else %}
-              <button id="blindUp_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;</button>
-              <button id="blindDown_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</button>
-              {% endif %}    
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
-      </form>
+    <div class="card-body">
+        <div class="form-group">
+          <form class="form-horizontal form-label-left">
+            <table class="table" style="width: auto;">
+              {% for k, v in blockArray[count]["blinds"].items() %}
+              <tr>
+                <td style="border-top: none;  vertical-align: middle;"><label class=""> &nbsp;{{k}}</label></td>
+                <td style="border-top: none;">
+                  {% if "venetian" in v[2]  %}
+                  <button id="blindUp_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm">&nbsp;<li class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;</button>
+                  <button id="blindStop_{{v[1]}}_block_{{count}}" class="btn  btn-danger btn-sm">&nbsp;<li class="fa fa-stop" aria-hidden="true"></i>&nbsp;</button>
+                  <button id="blindDown_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm">&nbsp;<li class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</button>
+                  {% elif "inverted" in v[2]  %}
+                  <button id="blindUp_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm">&nbsp;<li class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;</button>
+                  <button id="blindDown_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm">&nbsp;<li class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</button>
+                  {% elif "percentage" in v[2] %}
+                  <input id="blinds_percentage_{{v[1]}}_block_{{count}}" data-slider-id='blinds_{{v[1]}}_block_{{count}}' type="text" test={{ v[2] }} state="on" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14" />
+                  {% else %}
+                  <button id="blindUp_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm">&nbsp;<li class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;</button>
+                  <button id="blindDown_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm">&nbsp;<li class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;</button>
+                  {% endif %}    
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </form>
+        </div>
     </div>
   </div>
 </div>

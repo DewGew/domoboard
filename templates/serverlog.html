@@ -1,10 +1,19 @@
 <!-- Server log code created by https://github.com/galadril/FlatZ-Frontpage -->
-<div width="100px">
+<div class="col-md-6 col-sm-6 col-xs-12">
+<div class="input-group no-border">
   <input type="text" class="form-control" placeholder="Search for..." id="filterlog">
+  <button type="submit" class="btn btn-white btn-round btn-just-icon">
+      <i class="material-icons">search</i>
+   </button>
 </div>
-<br>
+</div>
+<div class="col-md-12 col-sm-6 col-xs-12">
+<div class="card">
+<div class="card-body">
 <div>
   <p id="showlog"></p>
+</div>
+</div>
 </div>
 <script>
 RefreshLogData();

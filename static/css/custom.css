@@ -1,7 +1,7 @@
 /*var in way of change color*/
 :root {
 	/*use with var(--main-blue-color)*/
-    --main-background-color: #2A3F54;
+    --main-background-color: #fafafa; /*#2A3F54;*/
     --main-text-color: #EAEAEA;
     --main-alt_text-color: #ECF0F1;
     --main-color: #1ABB9C;
@@ -38,12 +38,6 @@ body.nav-sm .navbar.nav_title a span {
 body.nav-sm .navbar.nav_title a i {
     font-size: 27px;
     margin: 13px 0 0 20px;
-}
-
-.site_title i {
-    border: 1px solid var(--main-text-color);
-    padding: 5px 6px;
-    border-radius: 50%;
 }
 
 body.nav-sm .main_container .top_nav {
@@ -369,27 +363,6 @@ body.nav-md .container.body .right_col {
     padding: 0
 }
 
-.navbar-nav>li>a,
-.navbar-brand,
-.navbar-nav>li>a {
-    color: var(--main-white-color) !important;
-}
-
-.navbar-brand,
-.navbar-nav>li>a {
-    margin-bottom: 5px
-}
-
-body {
-    color: var(--container-text-color);
-    background: var(--main-background-color);
-    /*var(--main-alt_text-color); #FCFCFC*/
-
-    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.471;
-}
 
 .main_container .top_nav {
     padding: 0 !important;
@@ -636,7 +609,7 @@ a:focus {
     margin-right: 0;
 }
 
-.top_nav .navbar-right {
+/* .top_nav .navbar-right {
     margin: 0;
     width: 70%;
     float: right;
@@ -658,7 +631,7 @@ a:focus {
 .top_nav .dropdown-menu li a {
     width: 100%;
     padding: 12px 20px;
-}
+} */
 
 .top_nav li a i {
     font-size: 15px
@@ -767,14 +740,6 @@ li.current-page {
 
 li.current-page a {
     color: var(--main-color) !important
-}
-
-.navbar-brand,
-.navbar-nav>li>a {
-    font-weight: 500;
-    color: var(--main-alt_text-color) !important;
-    margin-left: 0 !important;
-    line-height: 32px;
 }
 
 .site_title {
@@ -1719,47 +1684,6 @@ ul.msg_list li a .message {
     font-size: 11px;
 }
 
-.dropdown-menu.msg_list {
-    width: 300px !important;
-}
-
-.dropdown-menu.msg_list span {
-    white-space: normal;
-}
-
-.dropdown-menu {
-    border: medium none;
-    border-radius: 3px;
-    box-shadow: 0 0 3px;
-    display: none;
-    float: left;
-    font-size: 12px;
-    left: 0;
-    list-style: none outside none;
-    padding: 0;
-    position: absolute;
-    text-shadow: none;
-    top: 100%;
-    z-index: 1000;
-    border-radius: 2px;
-    border-top: 1px solid #999999;
-}
-
-.dropdown-menu:after {
-    border-bottom: 6px solid #999999;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    content: "";
-    display: inline-block;
-    right: 6%;
-    position: absolute;
-    top: -6px;
-}
-
-.dropdown-menu>li>a {
-    color: #5A738E;
-}
-
 .navbar-nav .open .dropdown-menu {
     position: absolute;
     background: var(--main-white-color);
@@ -1923,9 +1847,9 @@ span.right {
     display: block;
     padding: 5px 0 0 0;
     position: fixed;
-    width: 230px;
+    width: 260px;
     z-index: 1000;
-    background: var(--main-background-color);
+    background: var(--main-background-color);   
 }
 
 .sidebar-footer a {
@@ -1935,11 +1859,11 @@ span.right {
     font-size: 17px;
     display: block;
     float: left;
-    background: #172D44;
+    background: transparent;
 }
 
 .sidebar-footer a:hover {
-    background: #425567;
+    background: transparent;
 }
 
 .tile_count {
@@ -2302,7 +2226,7 @@ a.star {
     width: 100%;
 }
 
-.buttons,
+/* .buttons,
 button,
 .btn {
     margin-bottom: 5px;
@@ -2316,7 +2240,7 @@ button,
 .btn-group .btn {
     margin-bottom: 0;
     margin-right: 0;
-}
+} */
 
 .mail_list_column {
     border-left: 1px solid #DBDBDB;
@@ -2963,7 +2887,7 @@ select.parsley-error {
 }
 /* ***** /autocomplete *****/
 /* ***** buttons ********/
-
+/* 
 .btn.btn-app {
     position: relative;
     padding: 15px 5px;
@@ -3009,7 +2933,7 @@ select.parsley-error {
     right: -10px;
     font-size: 10px;
     font-weight: 400;
-}
+} */
 /* ***** /buttons *******/
 /* *********  /form design  **************************** */
 /* *********  calender dropdown  **************************** */

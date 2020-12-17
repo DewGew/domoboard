@@ -39,7 +39,6 @@ def request_loader(request):
     config = api.getConfig()
                 
     for k, v in config["general_settings"]["users"].items():
-        # users[k] = {'password': v}
         users[k] = v
     
     username = request.form.get('username')
@@ -82,6 +81,7 @@ def generatePage():
                                 blockArray = blockArray,
                                 _csrf_token = session['_csrf_token'],
                                 isAdmin = flask_login.current_user.group == 'admin',
+                                currentUser = flask_login.current_user.id,
                                 version = webconfig.getVersion(),
                                 branch = webconfig.getCurrentBranch(),
                                 debug = app.debug)
@@ -167,9 +167,9 @@ def validateConfigFormat(config):
             except:
                 if field is None:
                         if section[1] not in config[section[0]]:
-                            sys.exit("Config section not set: [{}] with subsection [[{}]]".format(section[0], section[1]))
+                            sys.exit("Config section not set: {} with subsection {}".format(section[0], section[1]))
                 else:
-                    sys.exit("Config field {} not set: section [{}] with subsection [[{}]]".format(field, section[0], section[1]))
+                    sys.exit("Config field {} not set: section {} with subsection {}".format(field, section[0], section[1]))
 
 def appendDefaultPages(config):
     config['settings'] = {'display_components': {'components': 'settings'}}
