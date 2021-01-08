@@ -1,17 +1,22 @@
 #!/usr/bin/env python
 
 from flask import Flask, g, redirect, url_for, render_template, abort, request, session
+from werkzeug.middleware.proxy_fix import ProxyFix
 import flask_login
 from secrets import compare_digest                                  
 from collections import OrderedDict
-import argparse, socket, re, logging
+import argparse, socket, re
 import hashlib, json, sys, os, yaml
 import modules.api as api
 import modules.domoticz as domoticz
 import modules.security as security
 import modules.webconfig as webconfig
+from modules.helpers import logger
 
 app = Flask(__name__)
+# Needed for use with reverse proxy
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)
+
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login_form"
@@ -110,6 +115,13 @@ def retrieveValue(page, component):
     except:
         dict = {}
     return dict
+    
+@flask_login.login_required
+def syslog():
+    f = open('logs/dzgaboard.log', 'r+')
+    syslog = f.read()
+    
+    return syslog
 
 def logout_view():
     user_data = flask_login.current_user.id
@@ -131,8 +143,11 @@ def login_form():
             flask_login.login_user(user)
             security.generateCsrfToken()
             return redirect(url_for('dashboard'))
+        if "X-Real-Ip" in request.headers:
+           logger.warning("Login failed from %s", request.headers["X-Real-Ip"])
         return render_template('login.html', failed = "Login failed")
-        
+    
+  
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return redirect(url_for('login_form'))
@@ -177,35 +192,26 @@ def appendDefaultPages(config):
     return config
 
 if __name__ == '__main__':
-    
-    configfile = 'config/config.yaml'
-    logfile = 'logs/dzgaboard.log'
-    
-    logging.basicConfig(level=logging.INFO)
-    logFormatter = logging.Formatter('[%(asctime)s %(levelname)s]: %(message)s')
-    logger = logging.getLogger()
-    logs = logging.FileHandler(logfile, encoding='utf-8')
-    logs.setFormatter(logFormatter)
-    logger.addHandler(logs)
-    
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--debug", dest="debug", action="store_true",
                   help="Run in debug mode")
     args = parser.parse_args()
-    
+       
     configfile = 'config/config.yaml'
+    
     try:
-        print('Loading configuration...')
+        logger.info('Loading configuration...')
         with open(configfile, 'r') as conf:
             unsanitizedConfig = yaml.safe_load(conf)
     except yaml.YAMLError as exc:
-        print('ERROR: Please check config.yaml')
+        logger.error('ERROR: Please check config.yaml')
     except FileNotFoundError as err:
-        print('No config.yaml found...')
-        print('Loading default configuration...')
+        logger.error('No config.yaml found...')
+        logger.info('Loading default configuration...')
         file = open('config/default_config', 'r+')
         content = file.read()
-        print('Create config.yaml...')
+        logger.info('Create config.yaml...')
         yamlfile = open(configfile, 'w+')
         yamlfile.write(content)
         yamlfile.close()
@@ -214,14 +220,16 @@ if __name__ == '__main__':
             unsanitizedConfig = yaml.safe_load(conf) 
     
     config = json.loads(security.sanitizeString(json.dumps(unsanitizedConfig)), object_pairs_hook=OrderedDict)
-    watchfiles = [configfile]
+    watchfiles = [configfile] 
     config = appendDefaultPages(config)
     api.setConfig(config, unsanitizedConfig)
     api.init()
     validateConfigFormat(config)
     domoticz.checkDomoticzStatus(config)
+       
     server_location = config["general_settings"]["server"]["domoticz_url"]
     flask_server_location = config["general_settings"]["server"]["dzgaboard_url"]
+    logger.info(' Running on %s (Press CTRL+C to quit)' % flask_server_location)
 
     app.secret_key = config["general_settings"]["server"]["secret_key"]
     app.add_url_rule('/', 'index', index)
@@ -231,8 +239,10 @@ if __name__ == '__main__':
     app.add_url_rule('/settings', 'settings', generatePage, methods=['GET'])
     app.add_url_rule('/log', 'log', generatePage, methods=['GET'])
     app.add_url_rule('/logout/', 'logout', logout_view, methods=['GET'])
+    app.add_url_rule('/syslog/', 'syslog', syslog, methods=['GET'])
     app.add_url_rule('/api', 'api', api.gateway, methods=['POST'])
     try:
         app.run(host=flask_server_location.split(":")[0],port=int(flask_server_location.split(":")[1]), threaded=True, extra_files=watchfiles, debug=args.debug)
     except (socket.error, Exception):
         sys.exit("Error when starting the Flask server: {}".format(Exception))
+        
