@@ -1,20 +1,94 @@
 <!-- Server log code created by https://github.com/galadril/FlatZ-Frontpage -->
-<div class="col-md-6 col-sm-6 col-xs-12">
-<div class="input-group no-border">
-  <input type="text" class="form-control" placeholder="Search for..." id="filterlog">
-  <button type="submit" class="btn btn-white btn-round btn-just-icon">
-      <i class="material-icons">search</i>
-   </button>
-</div>
-</div>
-<div class="col-md-12 col-sm-6 col-xs-12">
-<div class="card">
+<style>
+.blacknwhite{
+    color:#fff;
+    background-color:black;   
+    }
+</style>
+
+<div class="card card-nav-tabs">
+        <div class="card-header card-header-primary">
+        <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+        <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" id="defaultOpen" class="nav-link"
+                           onclick="openCat(event, 'domoticz_log')">Domoticz log</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" id="defaultOpen" class="nav-link"
+                           onclick="openCat(event, 'system_log')">System log</a>
+                    </li>
+                    <form class="form-inline ml-auto justify-content-end">
+                        <div class="form-group has-white">
+                          <input type="text" class="form-control" placeholder="Search for..." id="filterlog">
+                          <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                              <i class="material-icons">search</i>
+                           </button>
+                        </div>
+                    </form>
+                 </ul>
+            </div>
+        </div>
+
+    </div>
 <div class="card-body">
-<div>
+<div class="tab-pane" id="domoticz_log">
   <p id="showlog"></p>
 </div>
+<div class="tab-pane" id="system_log">
+    <textarea  class="blacknwhite" id="logs" rows="20" readonly autocomplete="off" style="font-size: 10pt; width: 100%;"></textarea>
+    <form>
+    <label><input type="checkbox" value="AutoScroll" id="autoScroll" label="Auto Scroll" checked>Auto-Scroll</label>
+    </form>
 </div>
 </div>
 <script>
 RefreshLogData();
+
+function getlogs(){
+    var x = document.getElementById("autoScroll").checked; //if autoscrool is checked
+    if(x==true){
+     document.getElementById("logs").scrollTop = document.getElementById("logs").scrollHeight; //autoscroll
+    }
+    
+    $.ajax({
+      type: 'GET',
+      url: '/syslog',
+      success: function(response) {
+          $("#logs").html(response);
+      }
+    });
+}
+
+getlogs()
+setInterval(getlogs, 2000);
+
+
+function openCat(evt, catName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("nav-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the link that opened the tab
+            document.getElementById(catName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+$(document).ready(function () {
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+});                                                     
 </script>

@@ -14,8 +14,8 @@
                     </li>
                     <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
                            onclick="openCat(event, 'settings')">Settings</a>
-<!--                     </li>
-                        <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
+                    </li>
+<!--                     <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
                            onclick="openCat(event, 'config')">Config</a>
                     </li> -->
                     {% endif %}
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="card-body">
-            <div class="tab-content">
+<div class="tab-content">
 <div id="updates" class="tabcontent text-center">
     <div id="updateView_available" class="hide_update">
       <h2>A new update is available for Dzgaboard.</h2><br />
@@ -58,6 +58,7 @@
 <div id="config" class="tabcontent">
   <div id="configView">
     <div class="dropdown">
+      <label for="Room">Room:</label>
       <select class="custom-select" id="dropdownMenuChoice" onChange="javascript:chgAction()">
           {% for k, v in configValues["navbar"].items() %}
               {% if v is iterable and v is not string %}
@@ -73,6 +74,7 @@
       {% set v = v[0] %}
       {% endif %}
       <div id="page_{{v}}" class="page_info page_info_hidden" style="display: none">
+        <label for="Component">Component:</label>
         <ul id="dropDown_page_{{v}}_dc" class="nav nav-tabs"></ul>
         <div class="form-group" id="page_{{v}}_configuration_options">
         </div>
@@ -86,9 +88,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add domoticz device to a page</h4>
+                <h5 class="modal-title" id="myModalLabel">Add domoticz device to a page</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                     <form onsubmit="modifyConfig()" role="form" name="modifyConfigForm">
@@ -99,16 +102,17 @@
                         <div class="dropdown">
                             <select class="custom-select" id="dropDownPage">
                                     <option selected>Choose page...</option>
-                                {% for k, v in configValues["navbar"].items() %}
-                                    <option>{{ v[0] }}</option>
-                                {% endfor %}
+                                    {% for k, v in configValues["navbar"].items() %}
+                                        <option>{{ v[0] }}</option>
+                                    {% endfor %}
                             </select>
                             (Select a page to add the domoticz device to)
                         </div>
                         <div class="dropdown">
                             <select class="custom-select" id="dropDownComponent">
-                                <option selected>Choose...</option>
-                                <option>top_tiles</option>
+                                <option >Choose...</option>
+                                <option selected>top_tiles</option>
+                                <option>power_usage</option>
                             </select>
                             (Select a display component to add the domoticz device to)
                         </div>
@@ -275,14 +279,14 @@
                       if (typeof(obj) == 'string') {
                         _val = String(obj).replace('\]', '_').replace('\[', '_')
 
-                        var newOption = $('<li class="nav-item"><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+obj+'</a></li>');
+                        var newOption = $('<li class="btn btn-success btn-sm"><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+obj+'</a></li>');
                         $('#dropDown_page_' + strUser + '_dc').append(newOption);
                         $('#page_' + strUser + '_configuration_options').append('<div class="page_configuration_info" id="page_' + strUser + '_configuration_options_' + _val + '"></div>');
                       } else {
                         $.each(obj, function(p, ddc) {
 
                             _val = String(ddc).replace('\]', '_').replace('\[', '_');
-                              var newOption = $('<li class="nav-item"><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+ddc+'</a></li>');
+                              var newOption = $('<li class="btn btn-success btn-sm"><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+ddc+'</a></li>');
                               $('#dropDown_page_' + strUser + '_dc').append(newOption);
                               $('#page_' + strUser + '_configuration_options').append('<div class="page_configuration_info" id="page_' + strUser + '_configuration_options_' + _val + '"></div>');
                             });
@@ -293,7 +297,7 @@
                         $.each(obj, function(ind, _ob) {
                           if (_ob.length != undefined) {
                           _obsplitted = String(_ob).split(',');
-                          newEl = '<div style="display: block;"><input class="form-control" type="text" name="' + ind + '" value="' + ind + '">';
+                          newEl = '<div style="display: block;"><label for="Name">Name:</label><input class="form-control" type="text" name="' + ind + '" value="' + ind + '">';
                           var count = 0;
                           $.each(_obsplitted, function(v, vv) {
                             newEl = newEl +  createDropdownOptions(vv, count);
@@ -305,7 +309,7 @@
                           $.each(_ob, function(indSub, _obSub) {
                               //  console.log(_obSub);
                             _obsplittedSub = String(_obSub).split(',');
-                            newEl = '<div style="display: block;"><input class="form-control" type="text" name="' + indSub + '" value="' + indSub + '">';
+                            newEl = '<div style="display: block;"><label for="Name">Name:</label><input class="form-control" type="text" name="' + indSub + '" value="' + indSub + '">';
                             var count = 0;
                             $.each(_obsplittedSub, function(v, vv) {
                               newEl = newEl +  createDropdownOptions(vv, count);
@@ -348,10 +352,10 @@
                         options = options + '<option value='+val+'>'+ val +'</option>';
                       }
                     })
-                    return '<select class="custom-select">' + options + '</select>';
+                    return '<label for="Graph option">Graph option:</label><select class="custom-select">' + options + '</select>';
                   } else if (isNaN(op) == false && index == 0) {
                     options = createDropdownDevices(op);
-                    return '<select class="custom-select">' + options + '</select>';
+                    return '<label for="Device">Device:</label><select class="custom-select">' + options + '</select>';
                   } else if ($.inArray('fa-' + op, icons) >= 0 && index == 1) {
 
                     $.each(icons, function(i, val) {
@@ -359,10 +363,10 @@
                       if (val == op) {
                         options = options + '<option selected=true value='+val+'>'+ val +'</option>';
                       } else {
-                        options = options + '<option value='+val+'>'+ val +'</option>';
+                        options = options + '<option value='+val+'>' + val +'</option>';
                       }
                     })
-                    return '<select class="custom-select">' + options + '</select>';
+                    return '<label for="Icon">Icon:</label><select class="custom-select">' + options + '</select>';
                 } else if (isNaN(op) == false && index != 0) {
                   options = '';
                   for (i = 0; i < 30; i++) {
@@ -372,7 +376,7 @@
                       options = options + '<option value=' + op + '>' + op + '</option>';
                     }
                   }
-                  return '<select class="custom-select">' + options + '</select>';
+                  return '<label for="Max/Min">Max/Min:</label><select class="custom-select">' + options + '</select>';
                 } else if ($.inArray(op, switches) >= 0 && index == 1) {
                   $.each(switches, function(i, val) {
                     if (val == op) {
@@ -381,9 +385,9 @@
                       options = options + '<option value='+val+'>'+ val +'</option>';
                     }
                   })
-                  return '<select class="custom-select">' + options + '</select>';
+                  return '<label for="Switch Type">Switch Type:</label><select class="custom-select">' + options + '</select>';
                 } else {
-                      options = '<input class="form-control" type="text" name="' + op + '" value="' + op + '">';
+                      options = '<label for="Option">Option:</label><input class="form-control" type="text" name="' + op + '" value="' + op + '">';
                       return options
                   }
 
