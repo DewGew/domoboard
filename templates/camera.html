@@ -16,30 +16,22 @@
   </div>
 </div>
 
-<div class="col-md-6 col-sm-6 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2 id="s_title_{{ count }}">Camera System</h2>
-      <ul class="nav navbar-right panel_toolbox">
-        <li><a class="close-link"><i class="fa fa-close"></i></a>
-        </li>
-      </ul>
-      <div class="clearfix"></div>
-    </div>
-    <div style=";overflow: hidden">
-      <br>
+<div class="col-lg-6 col-md-12">
+  <div class="card bg-dark text-white">
       {% for k, v in blockArray[count]["camera"].items() %}
         {% if v[0] %}
           <script>
             $('#s_title_{{ count }}').html("{{ v[0] }}");
           </script>
         {% endif %}
-      <form class="form-horizontal center-block" style="width: 80%; height: 80%; ">
 
-        <div id="cam_body_{{ count }}" class="form-group" style=""></div>
-      </form>
-      {% endfor %}
+        <div id="cam_body_{{ count }}" ></div>
+
+      
+    <div class="card-img-overlay">
+      <h4 id="s_title_{{ count }}">{{ v[0] }}</h4>
     </div>
+      {% endfor %}
   </div>
 </div>
 <script>
@@ -51,7 +43,7 @@
     if (" {{v[1]}}".match(/\?t\=$/)) {
      $('#cam_body_{{ count}}').append('<a style="cursor: pointer;" id="acam_{{ count}}" data-target="#streamModal" data-toggle="modal" href=""><img id="cam_{{ count }}" style="-webkit-user-select: none; width: 100%; height: 100%; " src="{{v[1]|replace('&amp;', '&')}}" ></a>');
    } else {
-     $('#cam_body_{{ count}}').append('<img id="cam_{{ count }}" style="-webkit-user-select: none; width: 100%; height: 100%; cursor: pointer; " src="{{v[1]|replace('&amp;', '&')}}" >');
+     $('#cam_body_{{ count}}').append('<img class="card-img" id="cam_{{ count }}" style="-webkit-user-select: none; width: 100%; height: 100%; cursor: pointer; " src="{{v[1]|replace('&amp;', '&')}}" >');
    }
    $('#acam_{{count}}').on('click', function() {
      $('#stream_img').attr('src', "{{v[1]|replace('&amp;', '&')}}");

@@ -366,7 +366,7 @@ function retrieveAvailableDevices() {
       var x = [item['idx'], item['Name']];
       arrData.push(x);
     });
-    var text = '<table class="table"><thead><tr><th>Idx</th><th>Name</th><th>Displayed on</th><th>Add</th></tr>';
+    var text = '<table class="table"><thead><tr><th class="text-primary">Idx</th><th class="text-primary">Name</th><th class="text-primary">Displayed on</th><th class="text-primary">Add</th></tr>';
     for (i = (arrData.length - 1); i > 0; i--) {
       text += '<tr>';
       var name = arrData[i][1];
@@ -480,7 +480,7 @@ function performUpgrade() {
 
 function checkVersion(branch) {
   $.ajax({
-    url: "https://raw.githubusercontent.com/DewGew/dzgaboard/master/VERSION.md",
+    url: "https://raw.githubusercontent.com/DewGew/dzgaboard/" + branch + "/VERSION.md",
     cache: false,
     success: function( data ) {
       if (branch == "master") {
@@ -494,6 +494,8 @@ function checkVersion(branch) {
     if (compare == 1) {
       document.getElementById('curver').innerHTML = version;
       document.getElementById('newver').innerHTML = dataFloat;
+      $("#noNotes").hide();
+      $("#notes").text("1").addClass("notification").show();
       $( "#version_div" ).removeClass("hide_update");
       $( "#version_div" ).addClass("show_update");
       }
@@ -504,7 +506,7 @@ function checkVersion(branch) {
 
 function checkVersionSettings(branch) {
   $.ajax({
-    url: "https://raw.githubusercontent.com/DewGew/dzgaboard/master/VERSION.md",
+    url: "https://raw.githubusercontent.com/DewGew/dzgaboard/" + branch + "/VERSION.md",
     cache: false,
     success: function( data ) {
       if (branch == "master") {

@@ -1,18 +1,17 @@
 <link href="/static/css/bootstrap-switch.css" rel="stylesheet" type="text/css" />
 <link href="/static/css/bootstrap-slider.css" rel="stylesheet">
-<link href="/static/css/buttons.css" rel="stylesheet" type="text/css" />
-<div class="col-md-6 col-sm-6 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2 id="s_title_{{ count }}">Switches</h2>
-      <ul class="nav navbar-right panel_toolbox">
+<!-- <link href="/static/css/buttons.css" rel="stylesheet" type="text/css" /> -->
+<div class="col-lg-6 col-md-12">
+  <div class="card">
+    <div class="card-header card-header-warning">
+        <ul class="nav panel_toolbox">
         <li><a class="close-link"><i class="fa fa-close"></i></a>
         </li>
       </ul>
-      <div class="clearfix"></div>
+      <h4 id="s_title_{{ count }}">Switches</h4>
     </div>
+    <div class="card-body">
     <div class="form-group">
-      <br>
       <form class="form-horizontal form-label-left">
         <table class="table" style="width: auto;">
           {% for k, v in blockArray[count]["switches"].items() %}
@@ -26,15 +25,15 @@
               {% if "switch" in v[2]  %}
               <input id="switch_{{v[1]}}_block_{{count}}" type="checkbox" checked data-size="mini">
               {% elif "dimmer" in v[2] %}
-            <input id="dimmer_{{v[1]}}_block_{{count}}" data-slider-id='dim_{{v[1]}}_block_{{count}}' type="text" test={{ v[2] }} state="on" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14" />
+              <input id="dimmer_{{v[1]}}_block_{{count}}" data-slider-id='dim_{{v[1]}}_block_{{count}}' type="text" test={{ v[2] }} state="on" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14" />
               {% elif "pushon" in v[2] %}
-                <button id="push_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button>
+                <button id="push_{{v[1]}}_block_{{count}}" class="btn btn-primary btn-sm">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button>
                 {% elif "pushoff" in v[2] %}
-                  <button id="push_{{v[1]}}_block_{{count}}" class="btn  btn-danger btn-circle">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button>
+                  <button id="push_{{v[1]}}_block_{{count}}" class="btn btn-danger btn-sm">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button>
                 {% elif "group" in v[2] %}
-                  <div><div style="float: left"><button id="groupon_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button></div><div style="padding-left: 20px; float: left"><button id="groupoff_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-circle btn-danger">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button></div></div>
+                  <div><div style="float: left"><button id="groupon_{{v[1]}}_block_{{count}}" class="btn btn-primary btn-sm">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button></div><div style="padding-left: 20px; float: left"><button id="groupoff_{{v[1]}}_block_{{count}}" class="btn  btn-primary btn-sm btn-danger">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button></div></div>
                 {% elif "scene" in v[2] %}
-                  <button id="scene_{{v[1]}}_block_{{count}}" class="btn btn-primary btn-circle">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button>
+                  <button id="scene_{{v[1]}}_block_{{count}}" class="btn btn-primary btn-sm">&nbsp;<li class="fa fa-power-off" aria-hidden="true"></i>&nbsp;</button>
                {% elif v[2] == "setpoint" %}
                      <div>
                          <div style="float: left; margin-right: 5px"><h1 id="setpoint_{{v[1]}}_block_{{count}}" style="font-size: 16px;"></h1></div>
@@ -47,8 +46,8 @@
                 <input id="setpoint_slider{{v[1]}}_block_{{count}}" data-slider-id='stpnt_{{v[1]}}_block_{{count}}' type="text" state="on" data-slider-min="16" data-slider-max="26" data-slider-step="0.5" />
               {% elif "selector" in v[2] %}
               <div class="btn-toolbar">
-              <div id="selector_body_{{v[1]}}_block_{{count}}" class="btn-group pull-right" style="width: 100%;"> </div>
-            </div>
+              <div id="selector_body_{{v[1]}}_block_{{count}}" class="btn-group btn-group-sm pull-right flex-wrap" style="width: 100%;"> </div>
+              </div>
               {% elif "rgb" in v[2] %}
               &nbsp;<input id="dimmer_{{v[1]}}_block_{{count}}" data-slider-id='dim_{{v[1]}}_block_{{count}}' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14" />
               <br><br>
@@ -93,6 +92,7 @@
           {% endfor %}
         </table>
       </form>
+    </div>
     </div>
   </div>
 </div>

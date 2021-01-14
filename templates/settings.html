@@ -1,22 +1,41 @@
-<link href="static/css/settings.css" rel="stylesheet" type="text/css"/>
-<ul class="tab">
-                        <li><a href="javascript:void(0)" id="defaultOpen" class="tablinks"
-                               onclick="openCat(event, 'updates')">Updates</a>
-                        </li>
-                        {% if isAdmin %}
-                        <li><a href="javascript:void(0)" id="defaultOpen" class="tablinks"
-                               onclick="openCat(event, 'plugins')">Plugins</a>
-                        </li>
-                        <li><a href="javascript:void(0)" class="tablinks"
-                               onclick="openCat(event, 'settings')">Settings</a>
-                        </li>
-<!--                         <li><a href="javascript:void(0)" class="tablinks"
-                               onclick="openCat(event, 'config')">Config</a>
-                        </li> -->
-                        {% endif %}
+<script src="static/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" href="static/codemirror/lib/codemirror.css">
+<script src="static/codemirror/mode/yaml/yaml.js"></script>
+<script src="static/codemirror/addon/display/autorefresh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/yamljs/0.3.0/yaml.js" integrity="sha512-Jw8ZZ0dBspCxuutzKJC77nBL7AXsdI7lLZ07Poy0Z4Eq8gsZdb4fbnfcm2JTmWnP+h/g646+vBXyC+WfPup2Lw==" crossorigin="anonymous"></script>
 
-                    </ul>
-<div id="updates" class="tabcontent">
+<link href="static/css/settings.css" rel="stylesheet" type="text/css"/>
+<div class="card card-nav-tabs">
+    <div class="card-header card-header-primary">
+        <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+        <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a href="javascript:void(0)" id="defaultOpen" class="nav-link"
+                           onclick="openCat(event, 'updates')">Updates</a>
+                    </li>
+                    {% if isAdmin %}
+                    <li class="nav-item"><a href="javascript:void(0)" id="defaultOpen" class="nav-link"
+                           onclick="openCat(event, 'plugins')">Plugins</a>
+                    </li>
+                    <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
+                           onclick="openCat(event, 'settings')">Settings</a>
+                    </li>
+<!--                     <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
+                           onclick="openCat(event, 'config')">Config</a>
+                    </li> -->
+                    <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
+                           onclick="openCat(event, 'configfile')">Config File</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+<div class="card-body">
+<div class="tab-content">
+<div id="updates" class="tabcontent text-center">
     <div id="updateView_available" class="hide_update">
       <h2>A new update is available for Dzgaboard.</h2><br />
       The current version is <b><span id="curver_settings"></span></b><br />
@@ -48,7 +67,8 @@
 <div id="config" class="tabcontent">
   <div id="configView">
     <div class="dropdown">
-      <select id="dropdownMenuChoice" onChange="javascript:chgAction()">
+      <label for="Room">Room:</label>
+      <select class="custom-select" id="dropdownMenuChoice" onChange="javascript:chgAction()">
           {% for k, v in configValues["navbar"].items() %}
               {% if v is iterable and v is not string %}
               <option>{{ v[0] }}</option>
@@ -63,8 +83,9 @@
       {% set v = v[0] %}
       {% endif %}
       <div id="page_{{v}}" class="page_info page_info_hidden" style="display: none">
+        <label for="Component">Component:</label>
         <ul id="dropDown_page_{{v}}_dc" class="nav nav-tabs"></ul>
-        <div id="page_{{v}}_configuration_options">
+        <div class="form-group" id="page_{{v}}_configuration_options">
         </div>
       </div>
 
@@ -83,19 +104,25 @@
             <div class="modal-body">
                     <form onsubmit="modifyConfig()" role="form" name="modifyConfigForm">
                         <input type="hidden" class="form-control" name="idx" value="">
-                        <input type="hidden" class="form-control" name="custom" value="modify_config"> Name:
-                        <input type="text" class="form-control" name="description">
+                        <input type="hidden" class="form-control" name="custom" value="modify_config">
+                        <input type="text" placeholder="Enter Name.." class="form-control" name="description">
+                        (Enter a display name)
                         <div class="dropdown">
-                            <select id="dropDownPage">
-                                {% for k, v in configValues["navbar"].items() %}
-                                    <option>{{ v[0] }}</option>
-                                {% endfor %}
+                            <select class="custom-select" id="dropDownPage">
+                                    {% set global = '' %}
+                                    <option selected>Choose page...</option>
+                                    {% for k, v in configValues["navbar"].items() %}
+                                    {% set global = v[0] %}
+                                        <option>{{ v[0] }}</option>
+                                    {% endfor %}
                             </select>
                             (Select a page to add the domoticz device to)
                         </div>
                         <div class="dropdown">
-                            <select id="dropDownComponent">
-                                <option>top_tiles</option>
+                            <select class="custom-select" id="dropDownComponent">
+                                <option >Choose...</option>
+                                <option selected>top_tiles</option>
+                                <option>power_usage</option>
                             </select>
                             (Select a display component to add the domoticz device to)
                         </div>
@@ -109,11 +136,21 @@
         </div>
     </div>
     <div>
-        <i>This page requires further development. Please use the config file for advanced changes to the dashboard.</i>
+        <i class="text-primary">This page requires further development. Please use the config file for advanced changes to the dashboard.</i>
         <p id="showdevices"></p>
     </div>
 </div>
-
+<div class="tabcontent" id="configfile">
+    <textarea id="code" style="width: 100%;">{{ configfile }}</textarea>
+    <hr/>
+    <form action="settings" method="post">
+    <button type="submit" class="btn btn-raised btn-success" name="save" id="save"><i class="material-icons" style="vertical-align: middle;">save</i> Save</button>
+    <button class="btn btn-raised btn-primary" name="backup" value="backup"><i class="material-icons" style="vertical-align: middle;">save_alt</i> Backup Config</button>
+    </form>
+</div>
+</div>
+</div>
+</div>
 <!-- Install Plugin Modal -->
 <div style="min-height: 100px;" class="modal fade" id="pluginModal" tabindex="-1" role="dialog" aria-labelledby="pluginModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -134,6 +171,7 @@
 </div>
 </div>
 </div>
+
     <script>
     var sort_by = function(field, reverse, primer){
       var key = primer ?
@@ -146,7 +184,7 @@
       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
     }
   }
-
+  
         function openCat(evt, catName) {
             // Declare all variables
             var i, tabcontent, tablinks;
@@ -158,7 +196,7 @@
             }
 
             // Get all elements with class="tablinks" and remove the class "active"
-            tablinks = document.getElementsByClassName("tablinks");
+            tablinks = document.getElementsByClassName("nav-link");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
@@ -259,14 +297,14 @@
                       if (typeof(obj) == 'string') {
                         _val = String(obj).replace('\]', '_').replace('\[', '_')
 
-                        var newOption = $('<li><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+obj+'</a></li>');
+                        var newOption = $('<li class="btn btn-success btn-sm"><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+obj+'</a></li>');
                         $('#dropDown_page_' + strUser + '_dc').append(newOption);
                         $('#page_' + strUser + '_configuration_options').append('<div class="page_configuration_info" id="page_' + strUser + '_configuration_options_' + _val + '"></div>');
                       } else {
                         $.each(obj, function(p, ddc) {
 
                             _val = String(ddc).replace('\]', '_').replace('\[', '_');
-                              var newOption = $('<li><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+ddc+'</a></li>');
+                              var newOption = $('<li class="btn btn-success btn-sm"><a child-of="' + strUser + '" value="' + _val + '" onclick="javascript:showDiv(this)">'+ddc+'</a></li>');
                               $('#dropDown_page_' + strUser + '_dc').append(newOption);
                               $('#page_' + strUser + '_configuration_options').append('<div class="page_configuration_info" id="page_' + strUser + '_configuration_options_' + _val + '"></div>');
                             });
@@ -277,7 +315,7 @@
                         $.each(obj, function(ind, _ob) {
                           if (_ob.length != undefined) {
                           _obsplitted = String(_ob).split(',');
-                          newEl = '<div style="display: block;"><input type="text" name="' + ind + '" value="' + ind + '">';
+                          newEl = '<div style="display: block;"><label for="Name">Name:</label><input class="form-control" type="text" name="' + ind + '" value="' + ind + '">';
                           var count = 0;
                           $.each(_obsplitted, function(v, vv) {
                             newEl = newEl +  createDropdownOptions(vv, count);
@@ -289,7 +327,7 @@
                           $.each(_ob, function(indSub, _obSub) {
                               //  console.log(_obSub);
                             _obsplittedSub = String(_obSub).split(',');
-                            newEl = '<div style="display: block;"><input type="text" name="' + indSub + '" value="' + indSub + '">';
+                            newEl = '<div style="display: block;"><label for="Name">Name:</label><input class="form-control" type="text" name="' + indSub + '" value="' + indSub + '">';
                             var count = 0;
                             $.each(_obsplittedSub, function(v, vv) {
                               newEl = newEl +  createDropdownOptions(vv, count);
@@ -332,10 +370,10 @@
                         options = options + '<option value='+val+'>'+ val +'</option>';
                       }
                     })
-                    return '<select>' + options + '</select>';
+                    return '<label for="Graph option">Graph option:</label><select class="custom-select">' + options + '</select>';
                   } else if (isNaN(op) == false && index == 0) {
                     options = createDropdownDevices(op);
-                    return '<select>' + options + '</select>';
+                    return '<label for="Device">Device:</label><select class="custom-select">' + options + '</select>';
                   } else if ($.inArray('fa-' + op, icons) >= 0 && index == 1) {
 
                     $.each(icons, function(i, val) {
@@ -343,10 +381,10 @@
                       if (val == op) {
                         options = options + '<option selected=true value='+val+'>'+ val +'</option>';
                       } else {
-                        options = options + '<option value='+val+'>'+ val +'</option>';
+                        options = options + '<option value='+val+'>' + val +'</option>';
                       }
                     })
-                    return '<select>' + options + '</select>';
+                    return '<label for="Icon">Icon:</label><select class="custom-select">' + options + '</select>';
                 } else if (isNaN(op) == false && index != 0) {
                   options = '';
                   for (i = 0; i < 30; i++) {
@@ -356,7 +394,7 @@
                       options = options + '<option value=' + op + '>' + op + '</option>';
                     }
                   }
-                  return '<select>' + options + '</select>';
+                  return '<label for="Max/Min">Max/Min:</label><select class="custom-select">' + options + '</select>';
                 } else if ($.inArray(op, switches) >= 0 && index == 1) {
                   $.each(switches, function(i, val) {
                     if (val == op) {
@@ -365,9 +403,9 @@
                       options = options + '<option value='+val+'>'+ val +'</option>';
                     }
                   })
-                  return '<select>' + options + '</select>';
+                  return '<label for="Switch Type">Switch Type:</label><select class="custom-select">' + options + '</select>';
                 } else {
-                      options = '<input type="text" name="' + op + '" value="' + op + '">';
+                      options = '<label for="Option">Option:</label><input class="form-control" type="text" name="' + op + '" value="' + op + '">';
                       return options
                   }
 
@@ -393,6 +431,26 @@
             document.getElementById("defaultOpen").click();
             setInterval(automaticIndex(), 9000);
             checkVersionSettings(branch);
+            
+            /* config page */
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                mode: "yaml",
+                autoRefresh:true
+            });
+            editor.setSize(null, 600);
+            editor.setOption("extraKeys", {
+              Tab: function(cm) {
+                var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                cm.replaceSelection(spaces);
+              }
+            });
+            editor.on("change", function() {
+                textTosave = editor.getValue();
+                document.getElementById("save").value = textTosave;
+             });
+             
+             document.getElementById("save").value = document.getElementById("code").value;
         });
 
         retrieveAvailableDevices();

@@ -3,6 +3,7 @@
 
 import git, yaml
 from modules import api
+from modules.helpers import logger
 from flask import request
 
 configfile = 'config/config.yaml'
@@ -17,6 +18,19 @@ def writeToConfig(idx, page, component, description, extra):
     file = open(configfile, 'w+')
     file.write(yaml.safe_dump(originalCfg, allow_unicode=True, sort_keys=False))
     file.close()
+    
+def saveConfig(codeToSave):
+    file = open(configfile, 'w+')
+    file.write(codeToSave)
+    file.close()
+    logger.info("Config saved")
+            
+def backupConfig():
+    original = api.getOriginalConfig()
+    backup = open('config/config.yaml.bak', 'w+')
+    backup.write(yaml.safe_dump(original, allow_unicode=True, sort_keys=False))
+    backup.close()
+    logger.info("Config backup is saved")
 
 def indexWebConfig(params={}):
     if 'page' in params:

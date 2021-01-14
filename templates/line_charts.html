@@ -1,14 +1,15 @@
 <div class="row">
-  <div class="x_panel">
-    <div id="title_block_{{count}}" class="x_title">
-      <h2>Line Graph</h2>
-      <ul class="nav navbar-right panel_toolbox">
+  <div class="card">
+    <div class="card-header card-header-success">
+      <ul class="nav panel_toolbox">
         <li><a class="close-link"><i class="fa fa-close"></i></a>
         </li>
       </ul>
-      <div class="clearfix"></div>
+        <div id="title_block_{{count}}" class="card-title">
+          <h4>Line Graph</h4>
+        </div>
     </div>
-    <div class="x_content2">
+    <div class="card-body">
       <div id="morris-line-chart-{{count}}" style="height: 200px;"></div>
     </div>
   </div>
@@ -34,7 +35,7 @@ $(document).ready(function() {
    }
 
   redrawLineChart(sensor,{{v[1]}},"{{v[2]}}", line_chart_block_{{count}});
-  $("div#title_block_{{count}} h2").html("{{k}}");
+  $("div#title_block_{{count}} h4").html("{{k}}");
   setInterval(redrawLineChart,9000,sensor,{{v[1]}},"{{v[2]}}",line_chart_block_{{count}});
 });
 {% endfor %}
