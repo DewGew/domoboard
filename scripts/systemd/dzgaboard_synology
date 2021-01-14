@@ -17,7 +17,7 @@ start_daemon ()
 
 stop_daemon ()
 {
-    # kill `cat ${PID_FILE}`
+    kill `cat ${PID_FILE}`
     wait_for_status 1 10 || kill -9 `cat ${PID_FILE}`
     rm -f ${PID_FILE}
 }
