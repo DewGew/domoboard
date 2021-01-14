@@ -27,7 +27,11 @@ general_settings:
     language: gb
     # Google Maps Embed API key
     google_maps_api_key: XXX
+    # autologon True or False, add allowed IP:s in autologon_allowed_Ip, remove or comment autologon_allowed_Ip to allow all IP:s
     autologon: 'False'
+    autologon_allowed_Ip:
+      - 192.168.1.10
+      - 192.168.1.20
 
 # Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.   
 navbar:
