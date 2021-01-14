@@ -26,7 +26,13 @@ general_settings:
     # Change this to display date/time in local language and format
     language: gb
     # Google Maps Embed API key
-    google_maps_api_key: XXX  
+    google_maps_api_key: XXX
+    # Enable/disable autologon 
+    autologon: 'False'
+    # Allowed IP:s comment out or remove to allow all IP:s
+    autologon_allowed_Ip:
+    - 192.168.1.35
+    - 192.168.1.20
 
 # Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.
 navbar:

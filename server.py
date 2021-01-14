@@ -49,7 +49,6 @@ def request_loader(request):
     if config["general_settings"]["domoboard"]["autologon"] == "True":
         users['Auto'] =  {'group': 'user', 'password': 'auto'}
 
-    logger.info(users)
     username = request.form.get('username')
     password = request.form.get('password', '')
     if username not in users:
@@ -141,7 +140,12 @@ def logout_view():
 
 @app.route('/login/', methods=['POST', 'GET'])
 def login_form():
-    if config["general_settings"]["domoboard"]["autologon"] == "True":
+    allowed = False
+    if "autologon_allowed_Ip" in config["general_settings"]["domoboard"]:
+        allowed = request.remote_addr in config["general_settings"]["domoboard"]["autologon_allowed_Ip"]
+    else:
+        allowed = True
+    if config["general_settings"]["domoboard"]["autologon"] == "True" and allowed == True:
         username = 'Auto'
         password = users['Auto']['password']
         if username in users and compare_digest(password, users[username]['password']):

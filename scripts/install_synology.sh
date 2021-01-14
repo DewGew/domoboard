@@ -72,7 +72,7 @@ sudo chmod 755 dzgaboard-daemon
 sudo ${ROOT_DIR}/dzgaboard-daemon restart
 
 echo ""
-echo "  Login to Dzgaboard Server UI at: http://ip.address:3030/settings"
+echo "  Login to Dzgaboard Server UI at: http://ip.address:8181"
 echo "  Default username is admin and default password is admin"
 echo "  or"
 echo "  Goto Dzgaboard/config folder and Edit config.yaml and then"
