@@ -5,6 +5,7 @@ from flask import request
 import flask_login
 import json, os, sys
 from modules import security, charts, plugins, webconfig, domoticz
+from modules.helpers import logger
 
 apiDict = {}
 modules = {}

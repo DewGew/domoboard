@@ -19,8 +19,8 @@ logs = logging.FileHandler(logfile, 'w', 'utf-8')
 logs.setFormatter(logFormatter)
 logger.addHandler(logs)
 
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+# log = logging.getLogger('werkzeug')
+# log.setLevel(logging.ERROR)
 
 # Function to load user info #
 def get_user(user="all"):

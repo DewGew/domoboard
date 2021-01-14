@@ -1,3 +1,9 @@
+<script src="static/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" href="static/codemirror/lib/codemirror.css">
+<script src="static/codemirror/mode/yaml/yaml.js"></script>
+<script src="static/codemirror/addon/display/autorefresh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/yamljs/0.3.0/yaml.js" integrity="sha512-Jw8ZZ0dBspCxuutzKJC77nBL7AXsdI7lLZ07Poy0Z4Eq8gsZdb4fbnfcm2JTmWnP+h/g646+vBXyC+WfPup2Lw==" crossorigin="anonymous"></script>
+
 <link href="static/css/settings.css" rel="stylesheet" type="text/css"/>
 <div class="card card-nav-tabs">
     <div class="card-header card-header-primary">
@@ -18,13 +24,16 @@
 <!--                     <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
                            onclick="openCat(event, 'config')">Config</a>
                     </li> -->
+                    <li class="nav-item" ><a href="javascript:void(0)" class="nav-link"
+                           onclick="openCat(event, 'configfile')">Config File</a>
+                    </li>
                     {% endif %}
 
                 </ul>
             </div>
         </div>
     </div>
-    <div class="card-body">
+<div class="card-body">
 <div class="tab-content">
 <div id="updates" class="tabcontent text-center">
     <div id="updateView_available" class="hide_update">
@@ -88,10 +97,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Add domoticz device to a page</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add domoticz device to a page</h4>
             </div>
             <div class="modal-body">
                     <form onsubmit="modifyConfig()" role="form" name="modifyConfigForm">
@@ -101,8 +109,10 @@
                         (Enter a display name)
                         <div class="dropdown">
                             <select class="custom-select" id="dropDownPage">
+                                    {% set global = '' %}
                                     <option selected>Choose page...</option>
                                     {% for k, v in configValues["navbar"].items() %}
+                                    {% set global = v[0] %}
                                         <option>{{ v[0] }}</option>
                                     {% endfor %}
                             </select>
@@ -129,6 +139,14 @@
         <i class="text-primary">This page requires further development. Please use the config file for advanced changes to the dashboard.</i>
         <p id="showdevices"></p>
     </div>
+</div>
+<div class="tabcontent" id="configfile">
+    <textarea id="code" style="width: 100%;">{{ configfile }}</textarea>
+    <hr/>
+    <form action="settings" method="post">
+    <button type="submit" class="btn btn-raised btn-success" name="save" id="save"><i class="material-icons" style="vertical-align: middle;">save</i> Save</button>
+    <button class="btn btn-raised btn-primary" name="backup" value="backup"><i class="material-icons" style="vertical-align: middle;">save_alt</i> Backup Config</button>
+    </form>
 </div>
 </div>
 </div>
@@ -166,7 +184,7 @@
       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
     }
   }
-
+  
         function openCat(evt, catName) {
             // Declare all variables
             var i, tabcontent, tablinks;
@@ -413,6 +431,26 @@
             document.getElementById("defaultOpen").click();
             setInterval(automaticIndex(), 9000);
             checkVersionSettings(branch);
+            
+            /* config page */
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                mode: "yaml",
+                autoRefresh:true
+            });
+            editor.setSize(null, 600);
+            editor.setOption("extraKeys", {
+              Tab: function(cm) {
+                var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                cm.replaceSelection(spaces);
+              }
+            });
+            editor.on("change", function() {
+                textTosave = editor.getValue();
+                document.getElementById("save").value = textTosave;
+             });
+             
+             document.getElementById("save").value = document.getElementById("code").value;
         });
 
         retrieveAvailableDevices();

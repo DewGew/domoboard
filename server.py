@@ -45,7 +45,11 @@ def request_loader(request):
                 
     for k, v in config["general_settings"]["users"].items():
         users[k] = v
-    
+        
+    if config["general_settings"]["domoboard"]["autologon"] == "True":
+        users['Auto'] =  {'group': 'user', 'password': 'auto'}
+
+    logger.info(users)
     username = request.form.get('username')
     password = request.form.get('password', '')
     if username not in users:
@@ -63,6 +67,11 @@ def request_loader(request):
 @flask_login.login_required
 def generatePage():
     requestedRoute = str(request.url_rule)[1:]
+    if request.method == 'POST':
+        if request.form.get("save"):       
+            webconfig.saveConfig(request.form.get("save", None))
+        if request.form.get("backup"):
+            webconfig.backupConfig()
     if configValueExists(requestedRoute):
         blockValues = OrderedDict()
         blockArray = []
@@ -89,6 +98,7 @@ def generatePage():
                                 currentUser = flask_login.current_user.id,
                                 version = webconfig.getVersion(),
                                 branch = webconfig.getCurrentBranch(),
+                                configfile = configcode,
                                 debug = app.debug)
     else:
         abort(404)
@@ -131,8 +141,16 @@ def logout_view():
 
 @app.route('/login/', methods=['POST', 'GET'])
 def login_form():
-    if request.method == 'GET':
-        return  render_template('login.html')
+    if config["general_settings"]["domoboard"]["autologon"] == "True":
+        username = 'Auto'
+        password = users['Auto']['password']
+        if username in users and compare_digest(password, users[username]['password']):
+            user = User()
+            user.id = username
+            user.group = users[username]['group']
+            flask_login.login_user(user)
+            security.generateCsrfToken()
+            return redirect(url_for('dashboard'))
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -143,9 +161,9 @@ def login_form():
             flask_login.login_user(user)
             security.generateCsrfToken()
             return redirect(url_for('dashboard'))
-        if "X-Real-Ip" in request.headers:
-           logger.warning("Login failed from %s", request.headers["X-Real-Ip"])
+        logger.warning("Login failed from %s", request.remote_addr)
         return render_template('login.html', failed = "Login failed")
+    return  render_template('login.html')
     
   
 @login_manager.unauthorized_handler
@@ -217,7 +235,10 @@ if __name__ == '__main__':
         yamlfile.close()
         file.close()
         with open(configfile, 'r') as conf:
-            unsanitizedConfig = yaml.safe_load(conf) 
+            unsanitizedConfig = yaml.safe_load(conf)
+                
+    cf = open(configfile, 'r+')
+    configcode = cf.read()
     
     config = json.loads(security.sanitizeString(json.dumps(unsanitizedConfig)), object_pairs_hook=OrderedDict)
     watchfiles = [configfile] 
@@ -236,7 +257,7 @@ if __name__ == '__main__':
     for k, v in config["navbar"]["menu"].items():
         v = strToList(v)
         app.add_url_rule('/' + v[0].lower(), v[0].lower(), generatePage, methods=['GET'])
-    app.add_url_rule('/settings', 'settings', generatePage, methods=['GET'])
+    app.add_url_rule('/settings', 'settings', generatePage, methods=['GET', 'POST'])
     app.add_url_rule('/log', 'log', generatePage, methods=['GET'])
     app.add_url_rule('/logout/', 'logout', logout_view, methods=['GET'])
     app.add_url_rule('/syslog/', 'syslog', syslog, methods=['GET'])
