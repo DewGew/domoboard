@@ -49,7 +49,6 @@ def request_loader(request):
     if config["general_settings"]["domoboard"]["autologon"] == "True":
         users['Auto'] =  {'group': 'user', 'password': 'auto'}
 
-    logger.info(users)
     username = request.form.get('username')
     password = request.form.get('password', '')
     if username not in users:
