@@ -11,7 +11,6 @@ import modules.api as api
 import modules.domoticz as domoticz
 import modules.security as security
 import modules.webconfig as webconfig
-import modules.smarthome as smarthome
 from modules.helpers import logger
 
 app = Flask(__name__)
@@ -256,6 +255,8 @@ if __name__ == '__main__':
     api.init()
     validateConfigFormat(config)
     domoticz.checkDomoticzStatus(config)
+    if 'google_assistant' in config["general_settings"] and config["general_settings"]["google_assistant"]["enabled"] == 'True':
+        import modules.smarthome as smarthome
        
     server_location = config["general_settings"]["server"]["domoticz_url"]
     flask_server_location = config["general_settings"]["server"]["dzgaboard_url"]
