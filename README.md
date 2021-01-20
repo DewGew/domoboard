@@ -147,7 +147,7 @@ Check out the page https://github.com/dewgew/dzgaboard-plugins for all plugins.
 
 Here are some screenshots from Dzgaboard:
 
-<a href="https://github.com/dewgew/dzgaboard"><img src="https://raw.githubusercontent.com/DewGew/dzgaboard/develop/static/img/DzgaBoard_UI.png" alt="Dzgaboard" border="0"></a>
+<a href="https://raw.githubusercontent.com/DewGew/dzgaboard/develop/static/img/DzgaBoard_UI.png"><img src="https://raw.githubusercontent.com/DewGew/dzgaboard/develop/static/img/DzgaBoard_UI.png" alt="Dzgaboard" border="0"></a>
 
 
 ## Contributing
