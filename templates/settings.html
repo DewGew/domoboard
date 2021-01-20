@@ -37,26 +37,26 @@
 <div class="tab-content">
 <div id="updates" class="tabcontent text-center">
     <div id="updateView_available" class="hide_update">
-      <h2>A new update is available for Dzgaboard.</h2><br />
+      <h2 class="text-warning">A new update is available for Dzgaboard.</h2><br />
       The current version is <b><span id="curver_settings"></span></b><br />
       The new version available is: <b><span id="newver_settings"></span></b><br />
       <br />
       {% if debug == True %}
-      <p><b>Install the new version by pressing the "Upgrade" button below.</b></p>
+      <p class="text-primary"><b>Install the new version by pressing the "Upgrade" button below.</b></p>
       {% endif %}
       {% if debug == False %}
-      <p><b>Upgrading through Dzgaboard is only possible when running in debug mode (pass "-d" parameter to server.py). Manual upgrade is possible by performing a "git pull" command.</b></p>
+      <p class="text-primary"><b>Upgrading through Dzgaboard is only possible when running in debug mode (pass "-d" parameter to server.py). Manual upgrade is possible by performing a "git pull" command.</b></p>
       {% endif %}
       {% if debug == True %}
       <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:performUpgrade()">Upgrade</button>
       {% endif %}
     </div>
     <div id="updateView_not_available" class="hide_update">
-      <h2>Hurray!</h2><br />
-      There is no update available for Dzgaboard.<br /><br />
+      <h1 class="text-success"><b>Hurray!</b></h1><br />
+      <p class="text-primary">There is no update available for Dzgaboard.</p>
     </div>
     <div id="updateView_no_git" class="hide_update">
-      <h2>To bad!</h2><br />
+      <h2 class="text-danger">To bad!</h2><br />
       Your Dzgaboard cannot update itself. Dzgaboard needs to be installed through a git clone in order to support auto-update. Updates are performed using git.<br /><br />
     </div>
 </div>
@@ -147,6 +147,12 @@
     <button type="submit" class="btn btn-raised btn-success" name="save" id="save"><i class="material-icons" style="vertical-align: middle;">save</i> Save</button>
     <button class="btn btn-raised btn-primary" name="backup" value="backup"><i class="material-icons" style="vertical-align: middle;">save_alt</i> Backup Config</button>
     </form>
+    {% if debug == False %}
+      <p class="text-primary"><b>Restart Dzgabord to activate new configuration.<br>When running in debug mode (pass "-d" parameter to server.py). Dzgabord restarts automatically.</b></p>
+    {% endif %}
+    {% if debug == True %}
+      <p class="text-primary"><b>When clicking 'SAVE' Dzgabord restarts automatically.</b></p>
+    {% endif %}
 </div>
 </div>
 </div>

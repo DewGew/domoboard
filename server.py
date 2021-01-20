@@ -11,6 +11,7 @@ import modules.api as api
 import modules.domoticz as domoticz
 import modules.security as security
 import modules.webconfig as webconfig
+import modules.smarthome as smarthome
 from modules.helpers import logger
 
 app = Flask(__name__)
@@ -177,6 +178,10 @@ def unauthorized_handler():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+    
+@app.errorhandler(405)
+def page_not_found(e):
+    return render_template('405.html'), 405
 
 def strToList(str):
     if not isinstance(str, list):
@@ -212,7 +217,7 @@ def appendDefaultPages(config):
     config['settings'] = {'display_components': {'components': 'settings'}}
     config['log'] =  {'display_components': {'components': 'serverlog'}}
     return config
-
+    
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -266,6 +271,11 @@ if __name__ == '__main__':
     app.add_url_rule('/logout/', 'logout', logout_view, methods=['GET'])
     app.add_url_rule('/syslog/', 'syslog', syslog, methods=['GET'])
     app.add_url_rule('/api', 'api', api.gateway, methods=['POST'])
+    if 'google_assistant' in config["general_settings"] and config["general_settings"]["google_assistant"]["enabled"] == 'True':
+        app.add_url_rule('/googleassistant/sync', 'sync', smarthome.sync, methods=['GET', 'POST'])
+        app.add_url_rule('/googleassistant/auth', 'auth', smarthome.auth, methods=['GET', 'POST'])
+        app.add_url_rule('/googleassistant/token', 'token', smarthome.token, methods=['POST'])
+        app.add_url_rule('/googleassistant/smarthome', 'smarthome', smarthome.fulfillment, methods=['GET', 'POST'])
     try:
         app.run(host=flask_server_location.split(":")[0],port=int(flask_server_location.split(":")[1]), threaded=True, extra_files=watchfiles, debug=args.debug)
     except (socket.error, Exception):

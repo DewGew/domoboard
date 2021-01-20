@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import os
-import json
+import os, sys, json
 import logging
-import requests
 from flask import request
-
-import random
-import string
-import config
+import random, string
 
 logfile = 'logs/dzgaboard.log'
+tokens_directory = "config/tokens/"
+DEVICES_DIRECTORY = "config/smarthome_devices/"
+
+sys.path.insert(0, DEVICES_DIRECTORY)
 
 logging.basicConfig(level=logging.INFO)
 logFormatter = logging.Formatter('[%(asctime)s %(levelname)s]: %(message)s')
@@ -19,12 +18,12 @@ logs = logging.FileHandler(logfile, 'w', 'utf-8')
 logs.setFormatter(logFormatter)
 logger.addHandler(logs)
 
-# log = logging.getLogger('werkzeug')
-# log.setLevel(logging.ERROR)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 # Function to load user info #
 def get_user(user="all"):
-    filename = os.path.join(config.USERS_DIRECTORY, "users.json")
+    filename = os.path.join(USERS_DIRECTORY, "users.json")
     if os.path.isfile(filename) and os.access(filename, os.R_OK):
         with open(filename, mode='r') as f:
             text = f.read()
@@ -50,7 +49,7 @@ def get_token():
 # Function to check current token, returns username #
 def check_token():
     access_token = get_token()
-    access_token_file = os.path.join(config.TOKENS_DIRECTORY, access_token)
+    access_token_file = tokens_directory + access_token
     if os.path.isfile(access_token_file) and os.access(access_token_file, os.R_OK):
         with open(access_token_file, mode='r') as f:
             return f.read()
@@ -59,7 +58,7 @@ def check_token():
 
 # Function to load device info
 def get_device(user_id, device_id):
-    filename = os.path.join(config.DEVICES_DIRECTORY, user_id + "_devices.json")
+    filename = DEVICES_DIRECTORY + user_id + "_devices.json"
     if os.path.isfile(filename) and os.access(filename, os.R_OK):
         with open(filename, mode='r') as f:
             text = f.read()
@@ -72,17 +71,73 @@ def get_device(user_id, device_id):
         
 # Function to load device info
 def get_devices(user_id):
-    filename = os.path.join(config.DEVICES_DIRECTORY, user_id + "_devices.json")
+    filename = DEVICES_DIRECTORY + user_id + "_devices.json"
     if os.path.isfile(filename) and os.access(filename, os.R_OK):
         with open(filename, mode='r') as f:
             text = f.read()
             data = json.loads(text)
             return data
     else:
+        logger.error("No json file")
         return None
 
 # Random string generator
 def random_string(stringLength=8):
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for i in range(stringLength))
+    
+def createJson(user_id):
+    filename = DEVICES_DIRECTORY + user_id + "_devices.json"
+    if os.path.isfile(filename) and os.access(filename, os.R_OK):
+        return
+    else:
+        dictonary = {
+            "Light_123" : {
+                "type": "action.devices.types.SWITCH",
+                "traits": [
+                    "action.devices.traits.OnOff"
+                ],
+                "name": {
+                    "name": "Light_123",
+                    "defaultNames": [
+                      "Livingroom lamp",
+                      "Livingroom light"
+                    ],
+                    "nicknames": [
+                      "TV-room lamp",
+                      "TV-room light"
+                    ]
+                },
+                "roomHint": "Livingroom",
+                "customData": {
+                    "idx": "123",
+                }
+
+            },
+            "Switch_234" : {
+                "type": "action.devices.types.LIGHT",
+                "traits": [
+                    "action.devices.traits.OnOff"
+                ],
+                "name": {
+                    "name": "Switch_234",
+                    "defaultNames": [
+                      "Fan switch",
+                      "Fan"
+                    ],
+                    "nicknames": [
+                      "Fan",
+                      "Air"
+                    ]
+                },
+                "roomHint": "Bedroom",
+                "customData": {
+                    "idx": "234"
+                }
+
+            }
+        }
+        json_object = json.dumps(dictonary, indent=4)
+        with open(filename, mode='w') as f:
+            f.write(json_object)
     
