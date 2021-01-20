@@ -147,14 +147,8 @@ Check out the page https://github.com/dewgew/dzgaboard-plugins for all plugins.
 
 Here are some screenshots from Dzgaboard:
 
-<a href="https://ibb.co/HdtygFD"><img src="https://i.ibb.co/GTWDPxv/domoboard-1-1.png" alt="domoboard-1-1" border="0"></a>
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/xCnbqFt/domoboard-2-2-2-2.png" alt="domoboard-2-2-2-2" border="0"></a>
-<a href="https://ibb.co/WvMgwjb"><img src="https://i.ibb.co/s9NyGz0/domoboard-3-3.png" alt="domoboard-3-3" border="0"></a>
-<a href="https://ibb.co/XC2xYnd"><img src="https://i.ibb.co/NyV2T0k/domoboard-4-4.png" alt="domoboard-4-4" border="0"></a>
-<a href="https://ibb.co/HKDc0cP"><img src="https://i.ibb.co/nwsXTX1/domoboard-5-5.png" alt="domoboard-5-5" border="0"></a>
-<a href="https://ibb.co/zSX48jD"><img src="https://i.ibb.co/9qbrwzS/domoboard-6-6-6-6.png" alt="domoboard-6-6-6-6" border="0"></a>
-<a href="https://ibb.co/jVWmG86"><img src="https://i.ibb.co/5Ynmv1M/domoboard-7.png" alt="domoboard-7" border="0"></a>
-<a href="https://ibb.co/MsZfQ3B"><img src="https://i.ibb.co/f2q9LPD/screen-domoticz.png" alt="screen-domoticz" border="0"></a>
+<a href="https://github.com/dewgew/dzgaboard"><img src="https://raw.githubusercontent.com/DewGew/dzgaboard/develop/static/img/DzgaBoard_UI.png" alt="Dzgaboard" border="0"></a>
+
 
 ## Contributing
 
