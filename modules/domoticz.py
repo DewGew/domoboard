@@ -12,6 +12,14 @@ def queryDomoticz(url):
     except:
         return "{}"
     return r.text
+    
+def getState(idx, data='Data'):
+    r = json.loads(queryDomoticz('?type=devices&rid=' + idx))
+    devs = r["result"]
+    for d in devs:
+         reponse = d[data]
+    
+    return reponse
 
 def checkDomoticzStatus(config):
     domoticzDevices = []

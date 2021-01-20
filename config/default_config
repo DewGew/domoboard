@@ -32,6 +32,12 @@ general_settings:
     autologon_allowed_Ip:
       - 192.168.1.10
       - 192.168.1.20
+    # Google Assistant credentials
+    google_assistant:
+      enabled: 'False'
+      client_id: 'client123'
+      client_secret: 'secret123'
+      api_key: xxxxxx
 
 # Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.   
 navbar:
