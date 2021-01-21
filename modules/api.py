@@ -72,6 +72,6 @@ def getOriginalConfig():
 def isJson(myjson):
     try:
         json_object = json.loads(myjson)
-    except (ValueError, e):
+    except ValueError as e:
         return False
     return True
