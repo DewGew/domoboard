@@ -1,3 +1,4 @@
+__pycache__
 env/
 modules/__pycache__
 logs/dzgaboard.log
@@ -5,3 +6,6 @@ logs/dzgaboard.log
 config/
 config/config.yaml
 config/smart-home-key.json
+plugins/__pycache__
+plugins/
+static/docs/
