@@ -1,22 +1,21 @@
 <script type="text/javascript" src="static/js/FeedEk.js"></script>
 <link href="static/css/FeedEk.css" rel="stylesheet" type="text/css" />
 <div class="col-md-6 col-sm-6 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2 id="s_title_{{count}}">News</h2>
-      <ul class="nav navbar-right panel_toolbox">
-        <li><a class="close-link"><i class="fa fa-close"></i></a>
-        </li>
+  <div class="card">
+    <div class="card-header card-header-info">
+      <ul class="nav panel_toolbox">
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
       </ul>
-      <div class="clearfix"></div>
+      <h4 id="s_title_{{ count }}">News</h4>
     </div>
+
     <div id="divRss-{{count}}"></div>
   </div>
 </div>
 
 <script>
 $(document).ready(function() {
-
+console.log("{{blockArray[count]['news'].get('rssfeed')[1]}}")
   {% for k, v in blockArray[count]["news"].items() %}
   {% if v[0] %}
       $('#s_title_{{ count }}').html("{{ v[0] }}");
@@ -31,7 +30,7 @@ $('#divRss-{{count}}').FeedEk({
   ShowPubDate:true,
   DescCharacterLimit:100,
   TitleLinkTarget:'_self',
-  DateFormat: 'MM/DD/YYYY',
+  DateFormat: 'MM/dd/yyyy',
   DateFormatLang:'en'
 });
 }
