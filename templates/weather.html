@@ -20,7 +20,7 @@ $(document).ready(function() {
     location: "{{blockArray[count]['weather'].get('location')[1]}}", //city and region *required
     country: "{{configValues['domoboard']['country']}}", //country *required
     api: "darksky", //default: openweathermap (openweathermap or yahoo)
-    apikey: "{{configValues['domoboard']['darksky_api']}}",   //optional api key for openweather
+    apikey: "{{configValues['domoboard']['weather_api']}}",   //optional api key for openweather
     latitude: "{{blockArray[count]['weather'].get('latitude')[1]}}", //required for darksky
     longitude: "{{blockArray[count]['weather'].get('longitude')[1]}}", //required for darksky
     view: "{{blockArray[count]['weather'].get('view')[1]}}", //default: full (partial, full, simple, today or forecast)
