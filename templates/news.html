@@ -8,14 +8,12 @@
       </ul>
       <h4 id="s_title_{{ count }}">News</h4>
     </div>
-
     <div id="divRss-{{count}}"></div>
   </div>
 </div>
 
 <script>
 $(document).ready(function() {
-console.log("{{blockArray[count]['news'].get('rssfeed')[1]}}")
   {% for k, v in blockArray[count]["news"].items() %}
   {% if v[0] %}
       $('#s_title_{{ count }}').html("{{ v[0] }}");
@@ -30,8 +28,8 @@ $('#divRss-{{count}}').FeedEk({
   ShowPubDate:true,
   DescCharacterLimit:100,
   TitleLinkTarget:'_self',
-  DateFormat: 'MM/dd/yyyy',
-  DateFormatLang:'en'
+  DateFormat: 'yyyy/MM/dd',
+  DateFormatLang:"{{configValues['domoboard']['language']}}"
 });
 }
 updateNews();
