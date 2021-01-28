@@ -1,3 +1,13 @@
+<style>
+.camName {
+    background: rgba(0,0,0, 0.2);
+    border-radius: 5px;
+    width: fit-content;
+}
+h4 {
+padding: 5px;
+}
+</style>
 <link href="static/css/camera.css" rel="stylesheet" type="text/css"/>
   <div style="min-height: 100px;" class="modal fade" id="streamModal" tabindex="-1" role="document" aria-labelledby="streamModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -29,7 +39,7 @@
 
       
     <div class="card-img-overlay">
-      <h4 id="s_title_{{ count }}">{{ v[0] }}</h4>
+      <h4 class="camName" id="s_title_{{ count }}">{{ v[0] }}</h4>
     </div>
       {% endfor %}
   </div>

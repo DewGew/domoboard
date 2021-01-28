@@ -33,6 +33,8 @@ general_settings:
     autologon_allowed_Ip:
     - 192.168.1.35
     - 192.168.1.20
+    # weather apikey 
+    weather_api: xxxxxxxxxxxxxxxxxx
     # Google Assistant credentials
     google_assistant:
       enabled: 'True'
@@ -141,7 +143,10 @@ dashboard:
     Total bedroom lamp: '12'
     Total playstation: '71'
   weather:
-    Location: "Eindhoven, NB"
+    location: Endhoven
+    latitude: 58.247430
+    longitude: 14.288150
+    view: full #(partial, full, simple, today or forecast)
   map:
     1:
       Location: '21'

@@ -32,8 +32,12 @@
 
   <div class="wrapper">
 
-          <!-- sidebar menu -->
-          <div class="sidebar" id="sidebar" data-color="purple" data-background-color="white" data-image="static/img/sidebar-1.jpg">
+          <!-- sidebar menu -->          
+          <div class="sidebar" id="sidebar" data-color="{{ configValues['domoboard']['color'] }}" data-background-color="white" data-image="static/img/sidebar-1.jpg">
+            <!--      
+            Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+            Tip 2: you can also add an image using data-image tag
+            -->
             <div class="logo">
             <a href="/dashboard" class="simple-text logo-normal"><i class="fa fa-home"></i> <span>Dzgaboard</span></a>
             </div>

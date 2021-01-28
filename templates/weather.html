@@ -1,12 +1,10 @@
 <div class="col-md-6 col-sm-6 col-xs-12">
-  <div class="x_panel">
-    <div class="x_title">
-      <h2>Weather</h2>
-      <ul class="nav navbar-right panel_toolbox">
-        <li><a class="close-link"><i class="fa fa-close"></i></a>
-        </li>
+  <div class="card">
+    <div class="card-header card-header-success">
+      <ul class="nav panel_toolbox">
+        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
       </ul>
-      <div class="clearfix"></div>
+      <h4 id="s_title_{{ count }}">Weather - {{blockArray[count]['weather'].get('location')[1]}}</h4>
     </div>
     <div id="weatherdash-{{count}}" style="padding-left:30px;padding-right:30px;padding-top:20px;"></div>
   </div>
@@ -19,15 +17,24 @@ $(document).ready(function() {
     $.stayInWebApp('a.stay');
   });
   var weatherdash = $("#weatherdash-{{count}}").flatWeatherPlugin({
-    location: "{{blockArray[count]['weather'].get('Location')[0]}}", //city and region *required
-    country: "Netherlands", //country *required
-    api: "yahoo", //default: openweathermap (openweathermap or yahoo)
-    view: "full", //default: full (partial, full, simple, today or forecast)
-    displayCityNameOnly: true, //default: false (true/false) if you want to display only city name
+    location: "{{blockArray[count]['weather'].get('location')[1]}}", //city and region *required
+    country: "{{configValues['domoboard']['country']}}", //country *required
+    api: "darksky", //default: openweathermap (openweathermap or yahoo)
+    apikey: "{{configValues['domoboard']['weather_api']}}",   //optional api key for openweather
+    latitude: "{{blockArray[count]['weather'].get('latitude')[1]}}", //required for darksky
+    longitude: "{{blockArray[count]['weather'].get('longitude')[1]}}", //required for darksky
+    view: "{{blockArray[count]['weather'].get('view')[1]}}", //default: full (partial, full, simple, today or forecast)
     forecast: 5, //default: 5 (0 -5) how many days you want forecast
     render: true, //default: true (true/false) if you want plugin to generate markup
     loadingAnimation: false, //default: true (true/false) if you want plugin to show loading animation
-    units: "metric", //units : "metric" or "imperial" default: "auto"
+    strings : { //strings for translation
+                days: ['Söndag','Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag'],
+                min : "Min",
+                max : "Max",
+                direction :  ["N","NNO","NO","ONO","O","OSO","SO","SSO","S","SSV","SV","VSV","V","VNV","NV", "NNV"]
+              },
+    timeformat: "24", //"12" or "24" time format
+    lang: "{{configValues['domoboard']['language']}}" //other languages supported see readme
   });
 });
 </script>
