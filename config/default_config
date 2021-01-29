@@ -19,12 +19,15 @@ general_settings:
         group: admin
         password: admin
   domoboard:
+    # Navbar color: purple | azure | green | orange | danger
+    color: purple
     # True/False: show time in top bar
     time: 'True'
     # True/False: show date in top bar
     date: 'True'
     # Change this to display date/time in local language and format
     language: gb
+    country: Netherlands
     # Google Maps Embed API key
     google_maps_api_key: XXX
     # autologon True or False, add allowed IP:s in autologon_allowed_Ip, remove or comment autologon_allowed_Ip to allow all IP:s
@@ -32,12 +35,12 @@ general_settings:
     autologon_allowed_Ip:
       - 192.168.1.10
       - 192.168.1.20
-    # Google Assistant credentials
-    google_assistant:
-      enabled: 'False'
-      client_id: 'client123'
-      client_secret: 'secret123'
-      api_key: xxxxxx
+  # Google Assistant credentials
+  google_assistant:
+    enabled: 'False'
+    client_id: 'client123'
+    client_secret: 'secret123'
+    api_key: xxxxxx
 
 # Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.   
 navbar:

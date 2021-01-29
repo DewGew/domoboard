@@ -8,7 +8,8 @@ general_settings:
     user: Username  
     password: Password
     # A random secret key used for Python authentication. Change to anything random.    
-    secret_key: 6BaSYEI3ZcInlu31B4iUx  
+    secret_key: 6BaSYEI3ZcInlu31B4iUx 
+    
   users:
     # Add users for Domoboard here. In this case login group "user" with username "username" and password "password"
     # or group "admin" with username "admin" and password "admin"
@@ -18,13 +19,17 @@ general_settings:
     admin:
         group: admin
         password: admin
+        
   domoboard:
+    # Navbar color: purple | azure | green | orange | danger
+    color: purple
     # True/False: show time in top bar
     time: 'True'
     # True/False: show date in top bar
     date: 'True'
     # Change this to display date/time in local language and format
     language: gb
+    country: Netherlands
     # Google Maps Embed API key
     google_maps_api_key: XXX
     # Enable/disable autologon 
@@ -33,14 +38,19 @@ general_settings:
     autologon_allowed_Ip:
     - 192.168.1.35
     - 192.168.1.20
-    # weather apikey 
+    
+  weather:
+    # weather apikey
     weather_api: xxxxxxxxxxxxxxxxxx
+    # Weather provider openweathermap | wunderground | darksky
+    weather_provider: darksky
     # Google Assistant credentials
-    google_assistant:
-      enabled: 'True'
-      client_id: 'client123'
-      client_secret: 'secret123'
-      api_key: xxxxxx
+    
+  google_assistant:
+    enabled: 'True'
+    client_id: 'client123'
+    client_secret: 'secret123'
+    api_key: xxxxxx
 
 # Add Navbar items here. The key is the navbar link name. The first value is the URI name, second value can be any font awesome logo to be displayed.
 navbar:
