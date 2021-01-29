@@ -4,7 +4,7 @@
       <ul class="nav panel_toolbox">
         <li><a class="close-link"><i class="fa fa-close"></i></a></li>
       </ul>
-      <h4 id="s_title_{{ count }}">Weather - {{blockArray[count]['weather'].get('location')[1]}}</h4>
+      <h4 id="s_title_{{ count }}">Weather</h4>
     </div>
     <div id="weatherdash-{{count}}" style="padding-left:30px;padding-right:30px;padding-top:20px;"></div>
   </div>
@@ -19,8 +19,8 @@ $(document).ready(function() {
   var weatherdash = $("#weatherdash-{{count}}").flatWeatherPlugin({
     location: "{{blockArray[count]['weather'].get('location')[1]}}", //city and region *required
     country: "{{configValues['domoboard']['country']}}", //country *required
-    api: "darksky", //default: openweathermap (openweathermap or yahoo)
-    apikey: "{{configValues['domoboard']['weather_api']}}",   //optional api key for openweather
+    api: "{{configValues['config']['general_settings']['weather']['weather_provider']}}", //default: openweathermap (openweathermap or yahoo)
+    apikey: "{{configValues['config']['general_settings']['weather']['weather_api']}}",   //optional api key for openweather
     latitude: "{{blockArray[count]['weather'].get('latitude')[1]}}", //required for darksky
     longitude: "{{blockArray[count]['weather'].get('longitude')[1]}}", //required for darksky
     view: "{{blockArray[count]['weather'].get('view')[1]}}", //default: full (partial, full, simple, today or forecast)
@@ -28,10 +28,10 @@ $(document).ready(function() {
     render: true, //default: true (true/false) if you want plugin to generate markup
     loadingAnimation: false, //default: true (true/false) if you want plugin to show loading animation
     strings : { //strings for translation
-                days: ['Söndag','Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag'],
+                days: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
                 min : "Min",
                 max : "Max",
-                direction :  ["N","NNO","NO","ONO","O","OSO","SO","SSO","S","SSV","SV","VSV","V","VNV","NV", "NNV"]
+                direction :  ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW", "NNW"]
               },
     timeformat: "24", //"12" or "24" time format
     lang: "{{configValues['domoboard']['language']}}" //other languages supported see readme

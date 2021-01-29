@@ -27,6 +27,7 @@ general_settings:
     date: 'True'
     # Change this to display date/time in local language and format
     language: gb
+    country: Netherlands
     # Google Maps Embed API key
     google_maps_api_key: XXX
     # autologon True or False, add allowed IP:s in autologon_allowed_Ip, remove or comment autologon_allowed_Ip to allow all IP:s
