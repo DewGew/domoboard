@@ -189,9 +189,9 @@ def fulfillment():
                         logger.error("Action is missing for %s in trait.py", device_id)
                         return str(err)
                     for e in command['execution']:
-                        command = e['command']
+                        comm = e['command']
                         params = e.get("params", None)
-                        action_result = action_method(custom_data, command, params)
+                        action_result = action_method(custom_data, comm, params)
                         action_result['ids'] = [device_id]
                         result['payload']['commands'].append(action_result)
                         if report_state.enable_report_state():
